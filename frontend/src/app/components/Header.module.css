@@ -1,0 +1,28 @@
+.header {
+  
+  top: 0;
+  left: 1.2%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  z-index: 100; /* Установлен z-index, чтобы элемент был над другими элементами */
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.logo {
+  width: 150px;
+}
+
+.name {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #333;
+}

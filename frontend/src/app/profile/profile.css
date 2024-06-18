@@ -1,0 +1,105 @@
+.videoBackground {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1; /* Помещаем видеофон под контент */
+}
+
+
+
+.border {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 35%;
+  width: 500px; /* Ширина контейнера border */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем содержимое по горизонтали */
+  justify-content: center; /* Центрируем содержимое по вертикали */
+  z-index: 1; /* Помещаем контейнер border поверх видео */
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
+  border-radius: 15px; /* Сглаженные углы */
+  padding: 20px; /* Внутренние отступы */
+}
+
+.title {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  width: 300px;
+  height: 40px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+}
+
+.submitButton {
+  width: 150px;
+  height: 40px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.submitButton:hover {
+  background-color: #555;
+}
+
+.registerLink {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.link {
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.profileContainer {
+  position: fixed;
+  top: 50%;
+  right: 10%;
+  width: 300px;
+  height: 400px;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: -10px 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1;
+}
+
+.profileField {
+  margin-bottom: 10px;
+  color: #333;
+}
