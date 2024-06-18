@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from .config import Config
 
 db = SQLAlchemy()
 jwt = JWTManager()
@@ -9,7 +8,7 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object('app.config.Config')
 
     db.init_app(app)
     jwt.init_app(app)
@@ -24,3 +23,10 @@ def create_app():
         db.create_all()
 
     return app
+
+
+__all__ = [
+    'db',
+    'jwt',
+    'create_app'
+]

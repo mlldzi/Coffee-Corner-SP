@@ -1,6 +1,6 @@
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash
-from . import db
+from app import db
 
 
 class User(db.Model):
