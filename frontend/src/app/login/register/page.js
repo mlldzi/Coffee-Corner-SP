@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
+
   const { register } = useAuthStore();
   const router = useRouter();
 
@@ -21,9 +21,9 @@ const RegisterPage = () => {
     e.preventDefault();
     if (username && password && fullName && phoneNumber && address) {
       try {
-        const response = await registerUser({ username, password, fullName, phoneNumber, address });
+        const response = await registerUser({ username, password, fullName, phoneNumber });
         if (response.success) {
-          register({ username, fullName, phoneNumber, address });
+          register({ username, fullName, phoneNumber });
           router.push('/profile');
         } else {
           alert('Registration failed');
@@ -70,13 +70,7 @@ const RegisterPage = () => {
             onChange={(e) => setPhoneNumber(e.target.value)}
             className={styles.input}
           />
-          <input
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className={styles.input}
-          />
+          
           <button type="submit" className={styles.link_button}>
             Register
           </button>
