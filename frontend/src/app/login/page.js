@@ -39,26 +39,26 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Имя пользователя"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={styles.input}
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Пароль"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
           />
           <button type="submit" className={styles.link_button}>
-            Login
+            Войти
           </button>
           <Link href="/login/register" className={styles.link_button}>
-            Register
+            Регистрация
           </Link>
           <Link href="/" className={styles.link_button}>
-          Return to Home
+          Главная
         </Link>
         </form>
       </div>

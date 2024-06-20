@@ -57,7 +57,7 @@ const RegisterPage = () => {
           <input
             type="text"
             name="fullName"
-            placeholder="Full Name"
+            placeholder="Полное имя"
             value={formData.fullName}
             onChange={handleChange}
             className={styles.input}
@@ -65,7 +65,7 @@ const RegisterPage = () => {
           <input
             type="text"
             name="phoneNumber"
-            placeholder="Phone Number"
+            placeholder="Номер телефона"
             value={formData.phoneNumber}
             onChange={handleChange}
             className={styles.input}
@@ -73,16 +73,16 @@ const RegisterPage = () => {
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Пароль"
             value={formData.password}
             onChange={handleChange}
             className={styles.input}
           />
           <button type="submit" className={styles.link_button}>
-            Register
+            Регистрация
           </button>
           <Link href="/" className={styles.link_button}>
-            Return to Home
+            Главная
           </Link>
         </form>
       </div>
