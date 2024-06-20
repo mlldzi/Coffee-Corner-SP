@@ -1,0 +1,43 @@
+/* menu.module.css */
+
+.videoBackground {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
+}
+
+.menuHeader {
+  /* Измените размер Header только на странице меню */
+  width: 10%; /* Измените значение по вашему усмотрению */
+  max-width: 20px; /* Измените значение по вашему усмотрению */
+  margin-bottom: 2px;
+}
+
+.menu {
+  /* Увеличьте размер контейнера с картинками и их описаниями */
+  width: 100%; /* Измените значение по вашему усмотрению */
+  max-width: 1300px; /* Измените значение по вашему усмотрению */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-top: 20px;
+  overflow: auto; /* Добавлено для прокрутки */
+}
