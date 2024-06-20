@@ -1,29 +1,41 @@
 'use client';
+
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '../../services/store';
+import { registerUser } from '../../services/api';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import VideoContainer from '../../components/VideoContainer';
 import styles from '../login.module.css';
-import { useRouter } from 'next/navigation';
-import useAuthStore from '../../services/store';
-import { registerUser } from '../../services/api'; // Импортируйте функцию registerUser
-import Link from 'next/link';
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phoneNumber: '',
+    password: ''
+  });
 
   const { register } = useAuthStore();
   const router = useRouter();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username && password && fullName && phoneNumber && address) {
+    const { fullName, phoneNumber, password } = formData;
+    
+    if (fullName && phoneNumber && password) {
       try {
-        const response = await registerUser({ username, password, fullName, phoneNumber });
+        const response = await registerUser({ fullName, phoneNumber, password });
         if (response.success) {
-          register({ username, fullName, phoneNumber });
+          register({ fullName, phoneNumber });
           router.push('/profile');
         } else {
           alert('Registration failed');
@@ -44,41 +56,35 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="fullName"
+            placeholder="Full Name"
+            value={formData.fullName}
+            onChange={handleChange}
+            className={styles.input}
+          />
+          <input
+            type="text"
+            name="phoneNumber"
+            placeholder="Phone Number"
+            value={formData.phoneNumber}
+            onChange={handleChange}
             className={styles.input}
           />
           <input
             type="password"
+            name="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
             className={styles.input}
           />
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="text"
-            placeholder="Phone Number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className={styles.input}
-          />
-          
           <button type="submit" className={styles.link_button}>
             Register
           </button>
           <Link href="/" className={styles.link_button}>
-          Return to Home
-        </Link>
+            Return to Home
+          </Link>
         </form>
-        
       </div>
     </div>
   );

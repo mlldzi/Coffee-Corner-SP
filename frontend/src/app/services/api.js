@@ -1,30 +1,47 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://your-api-url.com/api'; // Замените на ваш базовый URL API
+const API_BASE_URL = 'http://127.0.0.1:2500/api';
+
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+const handleApiError = (error) => {
+  if (error.response) {
+    console.error('API Error:', error.response.data);
+    throw error.response.data;
+  } else {
+    console.error('API Error:', error.message);
+    throw error.message;
+  }
+};
 
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/login`, credentials);
+    const response = await apiClient.post('/login', credentials);
     return response.data;
   } catch (error) {
-    throw error.response ? error.response.data : error.message;
+    handleApiError(error);
   }
 };
 
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/register`, userData);
+    const response = await apiClient.post('/register', userData);
     return response.data;
   } catch (error) {
-    throw error.response ? error.response.data : error.message;
+    handleApiError(error);
   }
 };
 
 export const getUserProfile = async (userId) => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
-      return response.data;
-    } catch (error) {
-      throw error.response ? error.response.data : error.message;
-    }
-  };
+  try {
+    const response = await apiClient.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
