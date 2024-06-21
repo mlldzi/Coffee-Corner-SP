@@ -11,8 +11,8 @@ import styles from '../login/login.module.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    phoneNumber: '',
+    full_name: '',
+    phone_number: '',
     password: ''
   });
 
@@ -29,13 +29,13 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullName, phoneNumber, password } = formData;
+    const { full_name, phone_number, password } = formData;
     
-    if (fullName && phoneNumber && password) {
+    if (full_name && phone_number && password) {
       try {
-        const response = await registerUser({ fullName, phoneNumber, password });
+        const response = await registerUser({ full_name, phone_number, password });
         if (response.success) {
-          register({ fullName, phoneNumber });
+          register({ full_name, phone_number });
           router.push('/profile');
         } else {
           alert('Registration failed');
@@ -56,17 +56,17 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
-            name="fullName"
+            name="full_name"
             placeholder="Полное имя"
-            value={formData.fullName}
+            value={formData.full_name}
             onChange={handleChange}
             className={styles.input}
           />
           <input
             type="text"
-            name="phoneNumber"
+            name="phone_number"
             placeholder="Номер телефона"
-            value={formData.phoneNumber}
+            value={formData.phone_number}
             onChange={handleChange}
             className={styles.input}
           />
