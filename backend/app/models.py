@@ -17,3 +17,16 @@ class User(db.Model):
     @password_hash.setter
     def password_hash(self, password):
         self.password = generate_password_hash(password)
+
+
+from datetime import datetime
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    is_completed = db.Column(db.Boolean, default=False, nullable=False)
+    prepared_by = db.Column(db.DateTime, nullable=False)
+    phone_number = db.Column(db.String(20), nullable=False)
+    cart = db.Column(db.Text, nullable=False)
+    total_amount = db.Column(db.Float, nullable=False)
