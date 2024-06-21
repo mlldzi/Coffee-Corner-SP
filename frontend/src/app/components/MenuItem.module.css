@@ -1,30 +1,28 @@
 .menuItem {
-  width: 280px;
-  margin: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  width: 200px; /* Ширина каждого элемента меню */
+  text-align: center; /* Центрирование заголовка */
+  background: white;
+  border-radius: 15px; /* Скошенные края */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта подъема */
+  padding: 15px;
 }
 
 .image {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 150px; /* Фиксированная высота для изображений */
+  object-fit: cover; /* Масштабирование изображения с сохранением пропорций */
+  border-radius: 10px;
 }
 
-.details {
+.content {
   padding: 10px;
-}
-
-.name {
-  font-size: 1.5em;
-  margin: 10px 0;
+  text-align: center; /* Центрирование заголовка */
 }
 
 .description {
-  font-size: 1em;
-  color: #555;
+  text-align: justify; /* Выровнять текст описания по ширине */
 }

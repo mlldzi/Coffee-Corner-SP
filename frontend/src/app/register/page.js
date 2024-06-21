@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useAuthStore from '../../services/store';
-import { registerUser } from '../../services/api';
+import useAuthStore from '../services/store';
+import { registerUser } from '../services/api';
 import Link from 'next/link';
-import Header from '../../components/Header';
-import VideoContainer from '../../components/VideoContainer';
-import styles from '../login.module.css';
+import Header from '../components/Header';
+import VideoContainer from '../components/VideoContainer';
+import styles from '../login/login.module.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
