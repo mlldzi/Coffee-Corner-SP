@@ -7,14 +7,15 @@ const MenuItem = ({ item }) => {
   useEffect(() => {
     fetch(`/menu/${item.description}`)
       .then(response => response.text())
-      .then(text => setDescription(text));
+      .then(data => setDescription(data))
+      .catch(error => console.error('Error loading description:', error));
   }, [item.description]);
 
   return (
     <div className={styles.menuItem}>
       <img src={`/menu/${item.image}`} alt={item.name} className={styles.image} />
-      <div className={styles.details}>
-        <h3 className={styles.name}>{item.name}</h3>
+      <div className={styles.content}>
+        <h3>{item.name}</h3>
         <p className={styles.description}>{description}</p>
       </div>
     </div>

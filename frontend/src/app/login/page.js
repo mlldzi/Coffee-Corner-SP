@@ -54,7 +54,7 @@ const LoginPage = () => {
           <button type="submit" className={styles.link_button}>
             Войти
           </button>
-          <Link href="/login/register" className={styles.link_button}>
+          <Link href="/register" className={styles.link_button}>
             Регистрация
           </Link>
           <Link href="/" className={styles.link_button}>
