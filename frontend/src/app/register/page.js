@@ -50,7 +50,7 @@ const RegisterPage = () => {
 
   return (
     <div className={styles.container}>
-      <VideoContainer src="/ugabuga.mp4" />
+      <VideoContainer src="/video.mp4" />
       <div className={styles.content}>
         <Header />
         <form onSubmit={handleSubmit} className={styles.form}>

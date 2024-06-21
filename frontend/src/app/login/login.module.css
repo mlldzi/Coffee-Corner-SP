@@ -10,15 +10,14 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 10%;
-  width: 500px; /* Ширина контейнера border */
+  left: 42%; /* Немного сдвинем влево для балансировки */
+  width: 270px; /* Увеличиваем ширину контейнера */
   display: flex;
   flex-direction: column;
   align-items: center; /* Центрируем содержимое по горизонтали */
-  justify-content: flex-start; /* Изменено с 'center' на 'flex-start', чтобы элементы были в верхней части */
+  justify-content: center; /* Центрируем содержимое по вертикали */
   z-index: 1; /* Помещаем контейнер border поверх видео */
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
-  border-radius: 15px; /* Сглаженные углы */
+  background: rgba(255, 255, 255, 0.8) ;
   padding: 20px; /* Внутренние отступы */
 }
 
@@ -26,14 +25,14 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%; /* Ширина формы равна ширине контейнера content */
+  width: 470px; /* Ширина формы равна ширине контейнера content */
   align-items: center; /* Центрирование элементов формы по горизонтали */
   padding: 150px;
 }
 
 .input {
   padding: 10px;
-  border: 2px solid #333; /* Черная окантовка */
+  border: 2px solid #807e7e; /* Черная окантовка */
   border-radius: 5px;
   font-size: 16px;
   width: 30%; /* Ширина полей ввода равна ширине контейнера content */
@@ -53,18 +52,18 @@
   font-size: 18px;
   width: 170px; /* Фиксированная ширина */
   height: 50px; /* Фиксированная высота */
-  margin-bottom: 15px;
+  margin-bottom: 5px; /* Уменьшено расстояние между кнопками */
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent; /* Прозрачный фон у ссылок */
+  background-color: rgba(255, 255, 255, 0.8); /* Прозрачный фон у ссылок */
   color: #333; /* Цвет текста ссылок */
   border-radius: 12px; /* Скошенные углы */
   cursor: pointer;
   font-family: 'Nunito', sans-serif; /* Шрифт ссылок */
   text-decoration: none; /* Убираем подчеркивание */
   overflow: hidden;
-  border: 2px solid #333;
+  border: 2px solid #cbc9c9;
 }
 
 .link_button::before {
@@ -84,5 +83,5 @@
 }
 
 .link_button:hover {
-  color: #fff;
+  color: #807e7e;
 }

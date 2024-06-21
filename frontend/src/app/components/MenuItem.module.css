@@ -1,28 +1,30 @@
+/* menuItem.module.css */
+
 .menuItem {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 10px;
-  width: 200px; /* Ширина каждого элемента меню */
-  text-align: center; /* Центрирование заголовка */
+  width: 200px;
+  text-align: center;
   background: white;
-  border-radius: 15px; /* Скошенные края */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта подъема */
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 15px;
 }
 
 .image {
   width: 100%;
-  height: 150px; /* Фиксированная высота для изображений */
-  object-fit: cover; /* Масштабирование изображения с сохранением пропорций */
+  height: 150px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
 .content {
   padding: 10px;
-  text-align: center; /* Центрирование заголовка */
+  text-align: center;
 }
 
 .description {
-  text-align: justify; /* Выровнять текст описания по ширине */
+  text-align: justify;
 }

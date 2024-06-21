@@ -33,13 +33,13 @@ const LoginPage = () => {
 
   return (
     <div className={styles.container}>
-      <VideoContainer src="/ugabuga.mp4" />
+      <VideoContainer src="/video.mp4" />
       <div className={styles.content}>
         <Header />
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
-            placeholder="Имя пользователя"
+            placeholder="Номер телефона"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className={styles.input}
