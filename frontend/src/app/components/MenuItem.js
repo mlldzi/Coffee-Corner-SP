@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './MenuItem.module.css';
+import useAuthStore from '../services/store';
 
 const MenuItem = ({ item }) => {
   const [description, setDescription] = useState('');
+  const { user, addToOrder } = useAuthStore();
 
   useEffect(() => {
     fetch(`/menu/${item.description}`)
@@ -10,6 +12,10 @@ const MenuItem = ({ item }) => {
       .then(data => setDescription(data))
       .catch(error => console.error('Error loading description:', error));
   }, [item.description]);
+
+  const handleAddToOrder = () => {
+    addToOrder(item);
+  };
 
   return (
     <div className={styles.menuItem}>
@@ -20,6 +26,7 @@ const MenuItem = ({ item }) => {
         <h3 className={styles.title}>{item.name}</h3>
         <p className={styles.description}>{description}</p>
       </div>
+      <button onClick={handleAddToOrder} className={styles.addButton}>Добавить в заказ</button>
     </div>
   );
 };
