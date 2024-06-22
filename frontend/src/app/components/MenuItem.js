@@ -13,9 +13,11 @@ const MenuItem = ({ item }) => {
 
   return (
     <div className={styles.menuItem}>
-      <img src={`/menu/${item.image}`} alt={item.name} className={styles.image} />
+      <div className={styles.imageContainer}>
+        <img src={`/menu/${item.image}`} alt={item.name} className={styles.image} />
+      </div>
       <div className={styles.content}>
-        <h3>{item.name}</h3>
+        <h3 className={styles.title}>{item.name}</h3>
         <p className={styles.description}>{description}</p>
       </div>
     </div>

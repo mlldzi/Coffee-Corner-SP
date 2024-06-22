@@ -1,10 +1,9 @@
-
-"use client"; 
-
-import React, { useEffect } from 'react';
+'use client'
+import React from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 import Header from './components/Header';
+import Cart from './components/Cart';
 import VideoContainer from './components/VideoContainer';
 import useAuthStore from './services/store';
 import { useRouter } from 'next/navigation';
@@ -30,6 +29,9 @@ export default function Home() {
           </Link>
           <Link href="/about" className={styles.link_button}>
             О нас
+          </Link>
+          <Link href="/orders" className={styles.link_button}>
+            Заказы
           </Link>
         </div>
       </div>
