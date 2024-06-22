@@ -45,3 +45,12 @@ export const getUserProfile = async (userId) => {
     handleApiError(error);
   }
 };
+
+export const getOrders = async (userId) => {
+  try {
+    const response = await apiClient.get(`/orders/${userId}`);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

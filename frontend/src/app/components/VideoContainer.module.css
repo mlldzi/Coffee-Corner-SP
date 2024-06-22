@@ -1,6 +1,6 @@
 .videoContainer {
     position: relative;
-    width: 100vw;
+    width: 110vw;
     height: 100vh;
     overflow: hidden;
   }
@@ -8,7 +8,7 @@
   .video {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 2.5%;
     min-width: 100%;
     min-height: 100%;
     width: auto;

@@ -21,8 +21,9 @@ const VideoBackground = styled.div`
 const Container = styled.div`
   position: absolute;
   top: 0;
+  
   left: 0;
-  right: 2%;
+  right: -1%;
   bottom: 0px;
   display: flex;
   flex-direction: column;
@@ -37,23 +38,25 @@ const MenuContainer = styled.div`
   max-width: 1500px;
   height: 100%;
   max-height: 560px;
-  padding: 10px;
+  padding: 30px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1%;
+  margin-top: 0%;
   transform: translateX(20px); /* Сместим контейнер чуть правее */
 `;
 
 const StyledSwiper = styled(Swiper)`
-  padding-left: 120px; /* Добавим пространство справа для стрелок навигации */
+  padding-left: 100px; /* Добавим пространство справа для стрелок навигации */
   .swiper-pagination-bullet {
     background: #000 !important; /* Цвет точек пагинации */
   }
 
   .swiper-pagination {
     bottom: 0px !important; /* Смещение точек пагинации ниже */
-  }
+    left: -20px; /* Смещаем точки пагинации левее */
+    bottom: 0px !important; /* Сохраняем смещение точек пагинации ниже */
+}
 
   .swiper-button-prev,
   .swiper-button-next {
