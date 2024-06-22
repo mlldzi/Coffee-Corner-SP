@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import Header from '../components/Header';
@@ -58,8 +58,8 @@ const LoginPage = () => {
             Регистрация
           </Link>
           <Link href="/" className={styles.link_button}>
-          Главная
-        </Link>
+            Главная
+          </Link>
         </form>
       </div>
     </div>
