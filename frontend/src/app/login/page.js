@@ -19,12 +19,12 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const response = await loginUser({ phone_number, password });
-      if (response.success) {
-        // Сохранение userId в состояние или хранилище
-        login({ ...response.user, userId: response.user.userId });
+      if (response.success && response.access_token && response.user && response.user.userId) {
+        // Сохранение userId и accessToken в состояние или хранилище
+        login({ ...response.user, accessToken: response.access_token });
         router.push('/profile');
       } else {
-        alert('Invalid credentials');
+        alert('Invalid credentials or missing user data');
       }
     } catch (error) {
       alert(error);

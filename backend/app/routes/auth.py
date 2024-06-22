@@ -6,7 +6,6 @@ from app.services import AuthService
 
 auth_bp = Blueprint('auth', __name__)
 
-
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -23,7 +22,6 @@ def register():
 
     return jsonify({"success": True, "msg": msg}), 201
 
-
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -38,8 +36,7 @@ def login():
         return jsonify({"success": False, "msg": "Неправильный пароль или пользователь не существует"}), 401
 
     access_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
-    return jsonify({"success": True, "access_token": access_token}), 200
-
+    return jsonify({"success": True, "access_token": access_token, "user": {"userId": user.id}}), 200
 
 @auth_bp.route('/profile', methods=['GET'])
 @jwt_required()
@@ -53,10 +50,10 @@ def profile():
     profile_data = {
         "full_name": user.full_name,
         "phone_number": user.phone_number,
+        "bonus_points": user.bonus_points,
     }
 
     return jsonify({"success": True, "profile": profile_data}), 200
-
 
 @auth_bp.route('/profile', methods=['PUT'])
 @jwt_required()

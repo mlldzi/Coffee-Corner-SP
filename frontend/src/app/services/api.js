@@ -37,9 +37,13 @@ export const registerUser = async (userData) => {
   }
 };
 
-export const getUserProfile = async (userId) => {
+export const getUserProfile = async (accessToken) => {
   try {
-    const response = await apiClient.get(`/users/${userId}`);
+    const response = await apiClient.get('/profile', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
     return response.data;
   } catch (error) {
     handleApiError(error);
