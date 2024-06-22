@@ -48,7 +48,7 @@ export const getUserProfile = async (userId) => {
 
 export const getOrders = async (userId) => {
   try {
-    const response = await apiClient.get(`/orders/${userId}`);
+    const response = await apiClient.get(`/orders/get_orders`);
     return response.data;
   } catch (error) {
     handleApiError(error);

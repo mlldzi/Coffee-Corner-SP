@@ -21,7 +21,11 @@ const OrdersPage = () => {
     const loadOrders = async () => {
       try {
         const ordersData = await getOrders(user.userId);
-        setOrders(ordersData);
+        if (ordersData.success) {
+          setOrders(ordersData.orders);
+        } else {
+          console.error('Failed to load orders');
+        }
       } catch (error) {
         console.error('Error loading orders:', error);
       }
@@ -32,9 +36,8 @@ const OrdersPage = () => {
 
   const handleLogout = () => {
     logout();
-    // Перенаправление на страницу входа после выхода
     window.location.href = '/login';
-  };//
+  };
 
   return (
     <div className={styles.videoBackground}>
@@ -46,12 +49,12 @@ const OrdersPage = () => {
             orders.map(order => (
               <div key={order.id} className={styles.orderItem}>
                 <h3>Заказ #{order.id}</h3>
-                <p>Дата: {order.date}</p>
-                <p>Сумма: {order.total}</p>
+                <p>Дата: {order.order_date}</p>
+                <p>Сумма: {order.total_amount}</p>
                 <ul>
-                  {order.items.map(item => (
-                    <li key={item.id}>
-                      {item.name} - {item.quantity} шт.
+                  {order.cart.split(', ').map((item, index) => (
+                    <li key={index}>
+                      {item}
                     </li>
                   ))}
                 </ul>
