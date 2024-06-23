@@ -6,13 +6,13 @@ from app.models import User
 
 class AuthService:
     @staticmethod
-    def register_user(full_name, password, phone_number):
+    def register_user(full_name, password, phone_number, role='user'):
         user = User.query.filter_by(phone_number=phone_number).first()
         if user:
             return None, "Такой пользователь уже существует"
 
         hashed_password = generate_password_hash(password)
-        new_user = User(full_name=full_name, password=hashed_password, phone_number=phone_number)
+        new_user = User(full_name=full_name, password=hashed_password, phone_number=phone_number, role=role)
         db.session.add(new_user)
         db.session.commit()
 

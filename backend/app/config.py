@@ -28,6 +28,10 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASS}@{DB}:{DB_PORT}/postgres'
 
     SECRET_KEY = 'your_secret_key'
-    JWT_SECRET_KEY = 'your_jwt_secret_key'
+    JWT_SECRET_KEY = 'block_lms'
     CORS_HEADERS = 'Content-Type'
-
+    JWT_TOKEN_LOCATION = ['cookies']
+    JWT_COOKIE_SECURE = False  # поменять на True в продакшене
+    JWT_ACCESS_COOKIE_PATH = '/'
+    JWT_REFRESH_COOKIE_PATH = '/refresh'
+    JWT_COOKIE_CSRF_PROTECT = True

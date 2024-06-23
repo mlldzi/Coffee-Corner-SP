@@ -4,11 +4,12 @@ from app import db
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     password = db.Column(db.String(200), nullable=False)
     full_name = db.Column(db.String(120))
     bonus_points = db.Column(db.Integer, default=0)
     phone_number = db.Column(db.String(20))
+    role = db.Column(db.String(50), default="user", nullable=False)
 
     @hybrid_property
     def password_hash(self):
