@@ -58,3 +58,21 @@ export const getOrders = async (userId) => {
     handleApiError(error);
   }
 };
+
+export const createOrder = async (orderData) => {
+  try {
+    const response = await apiClient.post(`/orders/create_order`, orderData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+export const editOrder = async (orderId, orderData) => {
+  try {
+    const response = await apiClient.put(`/orders/update_order/${orderId}`, orderData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
