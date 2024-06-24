@@ -5,14 +5,13 @@ import Header from '../components/Header';
 import VideoContainer from '../components/VideoContainer';
 import styles from './login.module.css';
 import {useRouter} from 'next/navigation';
-import useAuthStore from '../services/store';
 import {loginUser} from '../services/api';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
     const [phone_number, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
-    const {login} = useAuthStore();
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -20,7 +19,7 @@ const LoginPage = () => {
         try {
             const response = await loginUser({phone_number, password});
             if (response.success) {
-                login({...response.user, accessToken: response.access_token});
+                Cookies.set('csrf_access_token', response.access_token);
                 router.push('/profile');
             } else {
                 alert('Invalid credentials or missing user data');

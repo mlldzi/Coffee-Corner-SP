@@ -53,7 +53,11 @@ export const registerUser = async (userData) => {
 export const refreshToken = async () => {
     try {
         const response = await apiClient.post('/refresh');
-        return response.data;
+        if (response.data.access_token) {
+            Cookies.set('csrf_access_token', response.data.access_token);
+            return response.data.access_token;
+        }
+        return null;
     } catch (error) {
         handleApiError(error);
     }
@@ -81,7 +85,7 @@ export const getUserProfile = async (accessToken) => {
     }
 };
 
-export const getOrders = async (userId) => {
+export const getOrders = async () => {
     try {
         const response = await apiClient.get(`/orders/get_orders`);
         return response.data;

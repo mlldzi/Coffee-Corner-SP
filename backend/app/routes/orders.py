@@ -21,7 +21,7 @@ def create_order():
     return jsonify({"success": bool(order), "msg": msg}), status_code
 
 
-@orders_bp.route('/get_order/<int:order_id>', methods=['GET'])
+@orders_bp.route('/get_order/<string:order_id>', methods=['GET'])
 def get_order(order_id):
     order = OrderService.get_order_by_id(order_id)
     if order:

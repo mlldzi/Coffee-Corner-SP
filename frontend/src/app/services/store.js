@@ -1,25 +1,18 @@
 import {create} from 'zustand';
-import {persist} from 'zustand/middleware';
+import Cookies from 'js-cookie';
 
-const useAuthStore = create(
-        persist(
-            (set) => ({
-                user: null,
-                orders: [],
-                login: (userData) => set({user: {...userData, userId: userData.userId || null}}),
-                register: (userData) => set({user: {...userData, userId: userData.userId || null}}),
-                logout: () => (set({user: null, orders: []})),
-                addToOrder: (item) => set((state) => ({orders: [...state.orders, item]})),
-                clearOrders:
-                    () => set({orders: []}),
-            }),
-            {
-                name: 'auth-storage',
-                getStorage:
-                    () => localStorage,
-            }
-        )
-    )
-;
+const useAuthStore = create((set) => ({
+    user: null,
+    orders: [],
+    login: (userData) => set({user: {...userData, userId: userData.userId || null}}),
+    register: (userData) => set({user: {...userData, userId: userData.userId || null}}),
+    logout: () => {
+        set({user: null, orders: []});
+        Cookies.remove('csrf_access_token');
+        Cookies.remove('csrf_refresh_token');
+    },
+    addToOrder: (item) => set((state) => ({orders: [...state.orders, item]})),
+    clearOrders: () => set({orders: []}),
+}));
 
 export default useAuthStore;

@@ -31,7 +31,7 @@ class Config(object):
     JWT_SECRET_KEY = 'block_lms'
     CORS_HEADERS = 'Content-Type'
     JWT_TOKEN_LOCATION = ['cookies']
-    JWT_COOKIE_SECURE = False  # поменять на True в продакшене
+    JWT_COOKIE_SECURE = False
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/refresh'
     JWT_COOKIE_CSRF_PROTECT = True

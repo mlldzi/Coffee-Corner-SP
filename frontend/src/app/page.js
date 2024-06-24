@@ -3,14 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 import Header from './components/Header';
-import Cart from './components/Cart';
 import VideoContainer from './components/VideoContainer';
-import useAuthStore from './services/store';
-import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function Home() {
-  const { user } = useAuthStore();
-  const router = useRouter();
+  const accessToken = Cookies.get('csrf_access_token');
 
   return (
     <div className={styles.videoBackground}>
@@ -18,7 +15,7 @@ export default function Home() {
       <div className={styles.border}>
         <Header />
         <div className={styles.buttons}>
-          <Link href={user ? '/profile' : '/login'} className={styles.link_button}>
+          <Link href={accessToken ? '/profile' : '/login'} className={styles.link_button}>
             Профиль
           </Link>
           <Link href="/menu" className={styles.link_button}>

@@ -8,9 +8,9 @@ class OrderService:
     def format_order(order):
         return {
             "id": order.id,
-            "order_date": order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
+            "order_date": order.order_date.strftime('%Y-%m-%d %H:%M'),
             "is_completed": order.is_completed,
-            "prepared_by": order.prepared_by.strftime('%Y-%m-%d %H:%M:%S'),
+            "prepared_by": order.prepared_by.strftime('%Y-%m-%d %H:%M'),
             "phone_number": order.phone_number,
             "cart": order.cart,
             "total_amount": order.total_amount
@@ -19,7 +19,7 @@ class OrderService:
     @staticmethod
     def create_new_order(phone_number, cart, prepared_by, total_amount):
         try:
-            prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M:%S')
+            prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M')
         except ValueError:
             return None, "Неверный формат времени"
 
@@ -37,10 +37,19 @@ class OrderService:
 
     @staticmethod
     def get_order_by_id(order_id):
-        order = Order.query.get(order_id)
-        if order:
-            return OrderService.format_order(order)
-        return None
+        if order_id == "latest":
+            latest_order = Order.query.order_by(Order.id.desc()).first()
+            if latest_order:
+                return OrderService.format_order(latest_order)
+            return None, "Нет заказов"
+        try:
+            order_id = int(order_id)
+            order = Order.query.get(order_id)
+            if order:
+                return OrderService.format_order(order)
+            return None, "Заказ не найден"
+        except ValueError:
+            return None, "Неверный формат order_id"
 
     @staticmethod
     def get_all_orders():
@@ -80,7 +89,9 @@ class OrderService:
             order.cart = cart
         if prepared_by is not None:
             try:
-                order.prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M:%S')
+                prepared_by = prepared_by.split("T")
+                prepared_by = prepared_by[0] + " " + prepared_by[1]
+                order.prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M')
             except ValueError:
                 return None, "Неверный формат времени"
         if total_amount is not None:
