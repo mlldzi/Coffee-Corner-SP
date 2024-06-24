@@ -3,68 +3,65 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.videoWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.video {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .container {
   position: absolute;
   top: 0;
   left: 0;
-  right: 2%;
+  right: 0;
   bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
+  padding: 20px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0)); /* Градиентный фон */
   overflow-y: auto;
 }
 
 .ordersContainer {
-  width: 100%;
-  max-width: 1500px;
-  height: 100%;
-  max-height: 560px;
+  width: 90%; /* Увеличенный размер контейнера */
+  max-width: 1200px;
   padding: 30px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.8); /* Белый фон */
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1%;
   overflow-y: auto;
-}
-
-.orderItem {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.logoutButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #875151;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  transition: background-color 0.3s;
-}
-
-.logoutButton:hover {
-  background-color: #704040;
+  transition: width 0.3s ease; /* Плавный переход ширины */
+  margin-top: 20px; /* Отступ сверху */
 }
 
 .ordersTable {
   width: 100%;
   border-collapse: collapse;
+  text-align: center; /* Центрируем текст */
 }
 
 .ordersTable th, .ordersTable td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
 }
 
 .ordersTable th {
@@ -84,4 +81,46 @@
   padding-bottom: 12px;
   background-color: #4CAF50;
   color: white;
+}
+
+.ordersTable td input {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.p {
+  font-family: 'Nunito', sans-serif;
+  color: #333; /* Серый цвет текста */
+}
+
+.logoutButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #875151;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.logoutButton:hover {
+  background-color: #704040;
 }

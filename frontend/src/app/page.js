@@ -1,9 +1,8 @@
-'use client'
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 import Header from './components/Header';
-import VideoContainer from './components/VideoContainer';
 import Cookies from 'js-cookie';
 
 export default function Home() {
@@ -11,7 +10,9 @@ export default function Home() {
 
   return (
     <div className={styles.videoBackground}>
-      <VideoContainer src="/video.mp4" />
+      <div className={styles.videoWrapper}>
+        <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+      </div>
       <div className={styles.border}>
         <Header />
         <div className={styles.buttons}>

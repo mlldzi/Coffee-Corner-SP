@@ -40,7 +40,7 @@ export const loginUser = async (credentials) => {
         handleApiError(error);
     }
 };
-
+//хоба пися попа кака хаха оп оп
 export const registerUser = async (userData) => {
     try {
         const response = await apiClient.post('/register', userData);
