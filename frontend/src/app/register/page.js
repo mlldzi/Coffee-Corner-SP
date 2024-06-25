@@ -44,7 +44,9 @@ const RegisterPage = () => {
     };
 
     return (<div className={styles.container}>
-        <VideoContainer src="/video.mp4"/>
+        <div className={styles.videoWrapper}>
+            <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+        </div>
         <div className={styles.content}>
             <Header/>
             <form onSubmit={handleSubmit} className={styles.form}>
