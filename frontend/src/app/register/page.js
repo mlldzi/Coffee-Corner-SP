@@ -30,16 +30,15 @@ const RegisterPage = () => {
             try {
                 const response = await registerUser({full_name, phone_number, password});
                 if (response.success) {
-                    Cookies.set('csrf_access_token', response.access_token);
                     router.push('/profile');
                 } else {
-                    alert(response.msg || 'Registration failed');
+                    alert(response.msg || 'Ошибка регистрации');
                 }
             } catch (error) {
-                alert(error.message || 'An error occurred');
+                alert(error.message || 'Произошла ошибка');
             }
         } else {
-            alert('Please fill out all fields');
+            alert('Пожалуйста, заполните все поля');
         }
     };
 

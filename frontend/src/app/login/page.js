@@ -19,7 +19,6 @@ const LoginPage = () => {
         try {
             const response = await loginUser({phone_number, password});
             if (response.success) {
-                Cookies.set('csrf_access_token', response.access_token);
                 router.push('/profile');
             } else {
                 alert('Invalid credentials or missing user data');

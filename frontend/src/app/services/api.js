@@ -8,6 +8,7 @@ const apiClient = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': Cookies.get('csrf_refresh_token'),
     },
 });
 

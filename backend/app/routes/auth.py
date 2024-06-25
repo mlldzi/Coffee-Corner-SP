@@ -28,10 +28,9 @@ def register():
     access_token, refresh_token = generate_tokens(user.id, user.role)
 
     response = jsonify({"success": True})
-    set_access_cookies(response, access_token, )
+    set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
-
-    return jsonify({"success": True, "msg": msg}), 201
+    return response, 201
 
 
 @auth_bp.route('/login', methods=['POST'])
