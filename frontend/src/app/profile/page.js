@@ -58,14 +58,11 @@ const ProfilePage = () => {
                     ) : (
                         <h2>Загрузка...</h2>
                     )}
+                </div>
+                <div className={styles.linksContainer}>
                     <button onClick={handleLogout} className={styles.link_button}>
                         Выйти
                     </button>
-                </div>
-                <div className={styles.linksContainer}>
-                    <Link href="/about" className={styles.link_button}>
-                        О нас
-                    </Link>
                     <Link href="/menu" className={styles.link_button}>
                         Меню
                     </Link>
