@@ -1,53 +1,69 @@
 'use client';
 
 import React, {useState} from 'react';
-import Header from '../components/Header';
-import VideoContainer from '../components/VideoContainer';
-import styles from './login.module.css';
 import {useRouter} from 'next/navigation';
 import {loginUser} from '../services/api';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
+import Header from '../components/Header';
+import styles from './login.module.css';
 
 const LoginPage = () => {
-    const [phone_number, setPhoneNumber] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        phone_number: '', password: '',
+    });
+
     const router = useRouter();
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevData) => ({
+            ...prevData, [name]: value,
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await loginUser({phone_number, password});
-            if (response.success) {
-                router.push('/profile');
-            } else {
-                alert('Invalid credentials or missing user data');
+        const {phone_number, password} = formData;
+
+        if (phone_number && password) {
+            try {
+                const response = await loginUser({phone_number, password});
+
+                if (response && response.success) {
+                    router.push('/profile');
+                } else {
+                    alert(response && response.msg ? response.msg : 'Неправильный пароль или пользователь не существует');
+                }
+            } catch (error) {
+                alert(error.message || 'Произошла ошибка');
             }
-        } catch (error) {
-            alert(error);
+        } else {
+            alert('Пожалуйста, заполните все поля');
         }
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.videoWrapper}>
-                <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
             </div>
             <div className={styles.content}>
                 <Header/>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <input
                         type="text"
+                        name="phone_number"
                         placeholder="Номер телефона"
-                        value={phone_number}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        value={formData.phone_number}
+                        onChange={handleChange}
                         className={styles.input}
                     />
                     <input
                         type="password"
+                        name="password"
                         placeholder="Пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={formData.password}
+                        onChange={handleChange}
                         className={styles.input}
                     />
                     <button type="submit" className={styles.link_button}>

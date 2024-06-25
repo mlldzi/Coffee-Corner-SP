@@ -1,4 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+import re
 
 from app import db
 from app.models import User
@@ -7,6 +8,9 @@ from app.models import User
 class AuthService:
     @staticmethod
     def register_user(full_name, password, phone_number, role='user'):
+        if not re.match(r'^\+?\d+$', phone_number):
+            return None, "Неверный формат номера телефона"
+
         user = User.query.filter_by(phone_number=phone_number).first()
         if user:
             return None, "Такой пользователь уже существует"
