@@ -66,7 +66,7 @@ const ProfilePage = () => {
                     <Link href="/menu" className={styles.link_button}>
                         Меню
                     </Link>
-                    <Link href="/orders" className={styles.link_button}>
+                    <Link href="/history" className={styles.link_button}>
                         История заказов
                     </Link>
                 </div>

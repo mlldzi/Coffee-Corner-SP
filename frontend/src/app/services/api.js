@@ -112,3 +112,16 @@ export const editOrder = async (orderId, orderData) => {
         handleApiError(error);
     }
 };
+
+export const getUserOrders = async (accessToken) => {
+    try {
+        const response = await apiClient.get('/orders/history', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+    }
+};
