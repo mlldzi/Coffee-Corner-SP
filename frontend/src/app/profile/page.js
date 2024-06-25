@@ -1,13 +1,13 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import VideoContainer from '../components/VideoContainer';
-import styles from '../login/login.module.css';
+import styles from './profile.module.css'; // исправлено имя файла стилей
 import Link from 'next/link';
-import {getUserProfile, logout} from '../services/api';
+import { getUserProfile, logout } from '../services/api';
 import Cookies from 'js-cookie';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
@@ -47,7 +47,7 @@ const ProfilePage = () => {
                 <video className={styles.video} src="/video.mp4" autoPlay loop muted />
             </div>
             <div className={styles.content}>
-                <Header/>
+                <Header />
                 <div className={styles.profileContainer}>
                     {profile ? (
                         <>

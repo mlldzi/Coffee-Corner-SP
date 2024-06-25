@@ -6,6 +6,7 @@ import {loginUser} from '../services/api';
 import Link from 'next/link';
 import Header from '../components/Header';
 import styles from './login.module.css';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -30,6 +31,7 @@ const LoginPage = () => {
                 const response = await loginUser({phone_number, password});
 
                 if (response && response.success) {
+                    Cookies.set('csrf_access_token', response.csrf_access_token);
                     router.push('/profile');
                 } else {
                     alert(response && response.msg ? response.msg : 'Неправильный пароль или пользователь не существует');
@@ -42,6 +44,7 @@ const LoginPage = () => {
         }
     };
 
+    
     return (
         <div className={styles.container}>
             <div className={styles.videoWrapper}>
