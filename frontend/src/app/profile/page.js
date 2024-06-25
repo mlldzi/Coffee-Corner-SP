@@ -43,7 +43,9 @@ const ProfilePage = () => {
 
     return (
         <div className={styles.container}>
-            <VideoContainer src="/ugabuga.mp4"/>
+            <div className={styles.videoWrapper}>
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+            </div>
             <div className={styles.content}>
                 <Header/>
                 <div className={styles.profileContainer}>
