@@ -7,6 +7,7 @@ import useAuthStore from '../services/store';
 import {getOrders, editOrder, refreshToken} from '../services/api';
 import {useRouter} from 'next/navigation';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 const OrdersPage = () => {
     const {user, logout} = useAuthStore();
@@ -177,7 +178,9 @@ const OrdersPage = () => {
                         <p>Нет заказов.</p>
                     )}
                 </div>
-                <button onClick={handleLogout} className={styles.logoutButton}>Выйти</button>
+                <Link href="/" className={styles.link_button}>
+                        Главная
+                </Link>
             </div>
         </div>
     );

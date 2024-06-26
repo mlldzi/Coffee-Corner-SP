@@ -11,6 +11,7 @@
   overflow: hidden;
   transition: transform 0.3s ease;
   position: relative;
+  left:4%;
 }
 
 .menuItem:hover {

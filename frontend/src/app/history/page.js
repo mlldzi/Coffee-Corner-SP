@@ -22,7 +22,9 @@ const HistoryPage = () => {
             try {
                 const userOrders = await getUserOrders(accessToken);
                 if (userOrders.success) {
-                    setOrders(userOrders.orders);
+                    // Sort orders by ID in ascending order
+                    const sortedOrders = userOrders.orders.sort((a, b) => a.id - b.id);
+                    setOrders(sortedOrders);
                 } else {
                     console.error('Ошибка загрузки заказов:', userOrders.msg);
                 }

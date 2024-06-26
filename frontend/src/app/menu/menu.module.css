@@ -5,13 +5,35 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.videoWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.video {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .container {
   position: absolute;
   top: 0;
   left: 0;
-  right: 2%;
+  right: 0;
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -21,28 +43,53 @@
   overflow-y: auto;
 }
 
-.menu {
+.menuContainer {
   width: 100%;
   max-width: 1500px;
-  height: 550px;
+  height: 100%;
   padding: 30px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1%;
-  transform: translateX(20px); /* Сместим контейнер чуть правее */
+  margin-top: 10px;
+  margin-left: 10px; /* Сместим контейнер чуть правее */
 }
 
-/* Добавим специфичность для стрелок навигации и точек пагинации */
-.swiper-container .swiper-pagination-bullet {
-  background: #000 !important; /* Цвет точек пагинации */
+.swiper-pagination-bullet {
+  background: #000 !important;
 }
 
-.swiper-container .swiper-pagination {
-  bottom: -20px !important; /* Смещение точек пагинации ниже */
+.swiper-pagination {
+  bottom: -30px !important; /* Смещение точек пагинации ниже */
 }
 
-.swiper-container .swiper-button-prev,
-.swiper-container .swiper-button-next {
-  color: #875151 !important; /* Цвет стрелок навигации */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #875151 !important;
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+  .menuContainer {
+    width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .menuContainer {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .menuContainer {
+    width: 70%;
+  }
+}
+
+@media (max-width: 576px) {
+  .menuContainer {
+    width: 90%;
+    padding: 20px;
+  }
 }
