@@ -31,8 +31,8 @@ const RegisterPage = () => {
             try {
                 const response = await registerUser({full_name, phone_number, password});
                 if (response && response.success) {
-                    sessionStorage.setItem('access_token', response.access_token);
-                    localStorageну.setItem('refresh_token', response.refresh_token);
+                    localStorage.setItem('access_token', response.access_token);
+                    localStorage.setItem('refresh_token', response.refresh_token);
                     router.push('/profile');
                 } else {
                     alert(response && response.msg ? response.msg : 'Ошибка регистрации');

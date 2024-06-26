@@ -14,8 +14,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const loadProfile = async () => {
-            const accessToken = Cookies.get('csrf_access_token');
-            const accessToken_2 = sessionStorage.getItem('access_token');
+            const accessToken = Cookies.get('access_token_cookie');
+            const accessToken_2 = localStorage.getItem('access_token');
 
             if (!accessToken && !accessToken_2) {
                 router.push('/login');
@@ -23,7 +23,7 @@ const ProfilePage = () => {
             }
 
             try {
-                const profileData = await getUserProfile(accessToken);
+                const profileData = await getUserProfile(accessToken_2);
                 if (profileData.success) {
                     setProfile(profileData.profile);
                 } else {
