@@ -15,7 +15,9 @@ const ProfilePage = () => {
     useEffect(() => {
         const loadProfile = async () => {
             const accessToken = Cookies.get('csrf_access_token');
-            if (!accessToken) {
+            const accessToken_2 = sessionStorage.getItem('access_token');
+
+            if (!accessToken && !accessToken_2) {
                 router.push('/login');
                 return;
             }

@@ -2,7 +2,7 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import (
     create_access_token, get_jwt_identity,
     set_access_cookies, set_refresh_cookies,
-    unset_jwt_cookies, jwt_required
+    unset_jwt_cookies, jwt_required, create_refresh_token
 )
 from app.services import AuthService
 from app.utils.helpers import generate_tokens
@@ -25,9 +25,8 @@ def register():
     if not user:
         return jsonify({"success": False, "msg": msg}), 409
 
-    access_token, refresh_token = generate_tokens(user.id, user.role)
-
-    response = jsonify({"success": True})
+    access_token, refresh_token = generate_tokens(user.id)
+    response = jsonify({"success": True, 'access_token': access_token, 'refresh_token': refresh_token})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
     return response, 201
@@ -46,9 +45,8 @@ def login():
     if not user:
         return jsonify({"success": False, "msg": "Неправильный пароль или пользователь не существует"}), 401
 
-    access_token, refresh_token = generate_tokens(user.id, user.role)
-
-    response = jsonify({"success": True})
+    access_token, refresh_token = generate_tokens(user.id)
+    response = jsonify({"success": True, 'access_token': access_token, 'refresh_token': refresh_token})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
     return response, 200
