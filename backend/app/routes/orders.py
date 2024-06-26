@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.order_service import OrderService
+from app.services.user_service import UserService
 
 orders_bp = Blueprint('orders', __name__)
 
@@ -44,6 +46,15 @@ def get_orders_by_phone(phone_number):
 @orders_bp.route('/get_incomplete_orders', methods=['GET'])
 def get_incomplete_orders():
     orders = OrderService.get_incomplete_orders()
+    return jsonify({"success": True, "orders": orders}), 200
+
+
+@orders_bp.route('/history', methods=['GET'])
+@jwt_required()
+def get_user_order_history():
+    user_id = get_jwt_identity()
+    phone_number = UserService.get_phone_number_by_user_id(user_id)
+    orders = OrderService.get_orders_by_phone_number(phone_number)
     return jsonify({"success": True, "orders": orders}), 200
 
 

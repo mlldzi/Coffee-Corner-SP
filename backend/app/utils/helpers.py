@@ -16,6 +16,6 @@ def show_routes():
 
 
 def generate_tokens(user_id, role):
-    access_token = create_access_token(identity={"id": user_id, "role": role}, expires_delta=timedelta(minutes=10))
-    refresh_token = create_refresh_token(identity={"id": user_id, "role": role}, expires_delta=timedelta(days=7))
+    access_token = create_access_token(identity=user_id, expires_delta=timedelta(minutes=30))
+    refresh_token = create_refresh_token(identity=user_id, expires_delta=timedelta(days=7))
     return access_token, refresh_token

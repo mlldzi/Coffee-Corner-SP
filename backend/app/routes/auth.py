@@ -58,7 +58,7 @@ def login():
 @jwt_required()
 def profile():
     user_id = get_jwt_identity()
-    user = AuthService.get_user_profile(user_id["id"])
+    user = AuthService.get_user_profile(user_id)
 
     if not user:
         return jsonify({"success": False, "msg": "Пользователь не найден"}), 404

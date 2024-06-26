@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import VideoContainer from '../components/VideoContainer';
 import styles from './history.module.css'; 
 import { getUserOrders } from '../services/api';
 import Cookies from 'js-cookie';

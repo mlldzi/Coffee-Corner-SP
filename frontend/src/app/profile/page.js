@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import VideoContainer from '../components/VideoContainer';
-import styles from './profile.module.css'; // исправлено имя файла стилей
+import styles from './profile.module.css';
 import Link from 'next/link';
 import { getUserProfile, logout } from '../services/api';
 import Cookies from 'js-cookie';

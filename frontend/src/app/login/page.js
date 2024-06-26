@@ -31,7 +31,6 @@ const LoginPage = () => {
                 const response = await loginUser({phone_number, password});
 
                 if (response && response.success) {
-                    Cookies.set('csrf_access_token', response.csrf_access_token);
                     router.push('/profile');
                 } else {
                     alert(response && response.msg ? response.msg : 'Неправильный пароль или пользователь не существует');

@@ -49,7 +49,16 @@ services:
     secrets:
       - postgres_user
       - postgres_password
-
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "ter@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "ter"
+    restart: always
+    
 secrets:
   postgres_user:
     file: ./backend/secrets/postgres_user.txt

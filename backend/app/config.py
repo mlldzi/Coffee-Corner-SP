@@ -28,12 +28,14 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASS}@{DB}:{DB_PORT}/postgres'
 
     SECRET_KEY = 'your_secret_key'
-    JWT_SECRET_KEY = 'block_lms'
+    JWT_SECRET_KEY = 'your_secret_key'
     CORS_HEADERS = 'Content-Type'
     JWT_TOKEN_LOCATION = ['cookies']
-    JWT_COOKIE_SECURE = False
+
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/'
+    JWT_COOKIE_SECURE = True
     JWT_COOKIE_CSRF_PROTECT = True
     JWT_ACCESS_CSRF_HEADER_NAME = 'X-CSRF-TOKEN'
     JWT_REFRESH_CSRF_HEADER_NAME = 'X-CSRF-TOKEN'
+
