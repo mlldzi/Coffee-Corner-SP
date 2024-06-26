@@ -14,16 +14,15 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const loadProfile = async () => {
-            const accessToken = Cookies.get('access_token_cookie');
-            const accessToken_2 = localStorage.getItem('access_token');
+            const accessToken = Cookies.get('csrf_access_token');
 
-            if (!accessToken && !accessToken_2) {
+            if (!accessToken) {
                 router.push('/login');
                 return;
             }
 
             try {
-                const profileData = await getUserProfile(accessToken_2);
+                const profileData = await getUserProfile(accessToken);
                 if (profileData.success) {
                     setProfile(profileData.profile);
                 } else {

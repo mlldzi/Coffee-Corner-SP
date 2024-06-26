@@ -1,11 +1,9 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import (
-    create_access_token, get_jwt_identity,
-    set_access_cookies, set_refresh_cookies,
-    unset_jwt_cookies, jwt_required, create_refresh_token
+    create_access_token, get_jwt_identity, set_access_cookies, unset_jwt_cookies, jwt_required
 )
 from app.services import AuthService
-from app.utils.helpers import generate_tokens
+from app.utils import generate_auth_response
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -13,42 +11,24 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    full_name = data.get('full_name')
-    password = data.get('password')
-    phone_number = data.get('phone_number')
-    role = data.get('role', 'user')
+    user, msg = AuthService.register_user(data)
 
-    if not all([full_name, password, phone_number]):
-        return jsonify({"success": False, "msg": "Заполнены не все поля"}), 400
-
-    user, msg = AuthService.register_user(full_name, password, phone_number, role)
     if not user:
         return jsonify({"success": False, "msg": msg}), 409
 
-    access_token, refresh_token = generate_tokens(user.id)
-    response = jsonify({"success": True, 'access_token': access_token, 'refresh_token': refresh_token})
-    set_access_cookies(response, access_token)
-    set_refresh_cookies(response, refresh_token)
+    response = generate_auth_response(user.id)
     return response, 201
 
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    phone_number = data.get('phone_number')
-    password = data.get('password')
+    user, msg = AuthService.authenticate_user(data)
 
-    if not phone_number or not password:
-        return jsonify({"success": False, "msg": "Заполнены не все поля"}), 400
-
-    user = AuthService.authenticate_user(phone_number, password)
     if not user:
-        return jsonify({"success": False, "msg": "Неправильный пароль или пользователь не существует"}), 401
+        return jsonify({"success": False, "msg": msg}), 401
 
-    access_token, refresh_token = generate_tokens(user.id)
-    response = jsonify({"success": True, 'access_token': access_token, 'refresh_token': refresh_token})
-    set_access_cookies(response, access_token)
-    set_refresh_cookies(response, refresh_token)
+    response = generate_auth_response(user.id)
     return response, 200
 
 
@@ -75,10 +55,8 @@ def profile():
 def update_profile():
     user_id = get_jwt_identity()
     data = request.get_json()
-    full_name = data.get('full_name')
-    phone_number = data.get('phone_number')
+    user, msg = AuthService.update_user_profile(user_id, data)
 
-    user, msg = AuthService.update_user_profile(user_id, full_name, phone_number)
     if not user:
         return jsonify({"success": False, "msg": msg}), 404 if msg == "Пользователь не найден" else 409
 
@@ -89,14 +67,4 @@ def update_profile():
 def logout():
     response = jsonify({"success": True})
     unset_jwt_cookies(response)
-    return response, 200
-
-
-@auth_bp.route('/refresh', methods=['POST'])
-@jwt_required(refresh=True)
-def refresh():
-    identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity)
-    response = jsonify({"refresh": True})
-    set_access_cookies(response, access_token)
     return response, 200

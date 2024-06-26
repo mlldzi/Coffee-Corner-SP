@@ -1,6 +1,7 @@
-from flask import blueprints, current_app
+from flask import blueprints, current_app, jsonify
 from flask_jwt_extended import create_access_token, create_refresh_token
 from datetime import timedelta
+from flask_jwt_extended import set_access_cookies, set_refresh_cookies
 
 routes_bp = blueprints.Blueprint('routes', __name__)
 
@@ -15,7 +16,25 @@ def show_routes():
     return "<br>".join(routes)
 
 
-def generate_tokens(user_id):
-    access_token = create_access_token(identity=user_id, expires_delta=timedelta(days=30)) #!!!!!!!111111!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111111111111111
+def generate_auth_response(user_id):
+    access_token = create_access_token(identity=user_id, expires_delta=timedelta(hours=1))
     refresh_token = create_refresh_token(identity=user_id, expires_delta=timedelta(days=7))
-    return access_token, refresh_token
+
+    response = jsonify({"success": True})
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
+
+    return response
+
+
+def validate_data(data, required_fields):
+    missing = []
+    flag = False
+    for field in required_fields:
+        if field not in data:
+            missing.append(field)
+            flag = True
+    missing = ', '.join(missing)
+    if flag:
+        return False, f"Поле(-я) '{missing}' отсутствует(-ют)"
+    return True, None
