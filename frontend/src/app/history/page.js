@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import styles from './history.module.css';
 import { getUserOrders, checkAndRefreshToken } from '../services/api';
+import Link from 'next/link';
 
 const HistoryPage = () => {
     const [orders, setOrders] = useState([]);
@@ -61,6 +62,9 @@ const HistoryPage = () => {
                         <p>Нет заказов.</p>
                     )}
                 </div>
+                <Link href="/" className={styles.link_button}>
+                     Главная
+                </Link>
             </div>
         </div>
     );

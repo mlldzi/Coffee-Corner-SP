@@ -78,7 +78,9 @@ const OrdersPage = () => {
 
     return (
         <div className={styles.videoBackground}>
-            <VideoContainer src="/video.mp4"/>
+            <div className={styles.videoWrapper}>
+                 <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+             </div>
             <div className={styles.container}>
                 <Header/>
                 <div className={styles.ordersContainer}>
