@@ -1,32 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import styles from './profile.module.css';
 import Link from 'next/link';
-import { getUserProfile, logout } from '../services/api';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import {getUserProfile, logout, checkAndRefreshToken} from '../services/api';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
-    const router = useRouter();
 
     useEffect(() => {
         const loadProfile = async () => {
-            const accessToken = Cookies.get('csrf_access_token');
-
-            if (!accessToken) {
-                router.push('/login');
-                return;
-            }
-
             try {
+                const accessToken = await checkAndRefreshToken();
                 const profileData = await getUserProfile(accessToken);
                 if (profileData.success) {
                     setProfile(profileData.profile);
                 } else {
-                    console.error('Ошибка загрузки данных:', profileData.msg);
+                    console.error('Ошибка загрузки профиля:', profileData.msg);
                 }
             } catch (error) {
                 console.error('Ошибка загрузки профиля:', error);
@@ -44,10 +35,10 @@ const ProfilePage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.videoWrapper}>
-                <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
             </div>
             <div className={styles.content}>
-                <Header />
+                <Header/>
                 <div className={styles.profileContainer}>
                     {profile ? (
                         <>

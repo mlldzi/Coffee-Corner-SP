@@ -1,12 +1,11 @@
 'use client';
+
 import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import VideoContainer from '../components/VideoContainer';
 import styles from './orders.module.css';
 import useAuthStore from '../services/store';
-import {getOrders, editOrder, refreshToken} from '../services/api';
-import {useRouter} from 'next/navigation';
-import Cookies from 'js-cookie';
+import {getOrders, editOrder, checkAndRefreshToken} from '../services/api';
 import Link from 'next/link';
 
 const OrdersPage = () => {
@@ -17,42 +16,26 @@ const OrdersPage = () => {
         phone_number: '',
         cart: '',
         prepared_by: '',
-        total_amount: ''
+        total_amount: '',
     });
-    const router = useRouter();
-
-    const checkAndRefreshToken = async () => {
-        const accessToken = Cookies.get('csrf_access_token');
-        if (!accessToken) {
-            const newAccessToken = await refreshToken();
-            if (!newAccessToken) {
-                router.push('/login');
-                return null;
-            }
-            return newAccessToken;
-        }
-        return accessToken;
-    };
 
     useEffect(() => {
         const loadOrders = async () => {
-            const accessToken = await checkAndRefreshToken();
-            if (!accessToken) return;
-
             try {
-                const ordersData = await getOrders(accessToken);
+                const accessToken = await checkAndRefreshToken();
+                const ordersData = await getOrders('desc');
                 if (ordersData.success) {
                     setOrders(ordersData.orders);
                 } else {
-                    console.error('Failed to load orders');
+                    console.error('Ошибка загрузки заказов');
                 }
             } catch (error) {
-                console.error('Error loading orders:', error);
+                console.error('Ошибка загрузки заказов:', error);
             }
         };
 
         loadOrders();
-    }, [router]);
+    }, []);
 
     const handleLogout = () => {
         logout();
@@ -78,14 +61,12 @@ const OrdersPage = () => {
     };
 
     const handleSaveClick = async () => {
-        const accessToken = await checkAndRefreshToken();
-        if (!accessToken) return;
-
         try {
-            const response = await editOrder(editingOrder, formData, accessToken);
+            const accessToken = await checkAndRefreshToken();
+            const response = await editOrder(editingOrder, formData);
             if (response.success) {
                 setEditingOrder(null);
-                const updatedOrders = await getOrders(accessToken);
+                const updatedOrders = await getOrders('desc');
                 setOrders(updatedOrders.orders);
             } else {
                 console.error('Ошибка редактирования заказа');
@@ -179,7 +160,7 @@ const OrdersPage = () => {
                     )}
                 </div>
                 <Link href="/" className={styles.link_button}>
-                        Главная
+                    Главная
                 </Link>
             </div>
         </div>

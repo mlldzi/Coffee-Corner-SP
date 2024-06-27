@@ -12,6 +12,32 @@ const apiClient = axios.create({
     },
 });
 
+const refreshToken = async () => {
+    try {
+        const response = await apiClient.post('/refresh');
+        if (response.data.access_token) {
+            Cookies.set('csrf_access_token', response.data.access_token);
+            return response.data.access_token;
+        }
+        return null;
+    } catch (error) {
+        handleApiError(error);
+    }
+};
+
+const checkAndRefreshToken = async () => {
+    const accessToken = Cookies.get('csrf_access_token');
+    if (!accessToken) {
+        const newAccessToken = await refreshToken();
+        if (!newAccessToken) {
+            throw new Error('Ошибка обновления access token, скорее всего нет refresh token');
+        }
+        return newAccessToken;
+    }
+    return accessToken;
+};
+
+
 const handleApiError = async (error) => {
     if (error.response) {
         if (error.response.status === 401 && error.response.data.msg === 'Токен истек') {
@@ -33,7 +59,7 @@ const handleApiError = async (error) => {
     }
 };
 
-export const loginUser = async (credentials) => {
+const loginUser = async (credentials) => {
     try {
         const response = await apiClient.post('/login', credentials);
         return response.data;
@@ -42,7 +68,7 @@ export const loginUser = async (credentials) => {
     }
 };
 
-export const registerUser = async (userData) => {
+const registerUser = async (userData) => {
     try {
         const response = await apiClient.post('/register', userData);
         return response.data;
@@ -51,20 +77,7 @@ export const registerUser = async (userData) => {
     }
 };
 
-export const refreshToken = async () => {
-    try {
-        const response = await apiClient.post('/refresh');
-        if (response.data.access_token) {
-            Cookies.set('csrf_access_token', response.data.access_token);
-            return response.data.access_token;
-        }
-        return null;
-    } catch (error) {
-        handleApiError(error);
-    }
-};
-
-export const logout = async () => {
+const logout = async () => {
     try {
         const response = await apiClient.post('/logout');
         return response.data;
@@ -73,7 +86,7 @@ export const logout = async () => {
     }
 };
 
-export const getUserProfile = async (accessToken) => {
+const getUserProfile = async (accessToken) => {
     try {
         const response = await apiClient.get('/profile', {
             headers: {
@@ -86,16 +99,16 @@ export const getUserProfile = async (accessToken) => {
     }
 };
 
-export const getOrders = async () => {
+const getOrders = async (flag = 'asc') => {
     try {
-        const response = await apiClient.get(`/orders/get_orders`);
+        const response = await apiClient.get(`/orders/get_orders?flag=${flag}`);
         return response.data;
     } catch (error) {
         handleApiError(error);
     }
 };
 
-export const createOrder = async (orderData) => {
+const createOrder = async (orderData) => {
     try {
         const response = await apiClient.post(`/orders/create_order`, orderData);
         return response.data;
@@ -104,7 +117,7 @@ export const createOrder = async (orderData) => {
     }
 };
 
-export const editOrder = async (orderId, orderData) => {
+const editOrder = async (orderId, orderData) => {
     try {
         const response = await apiClient.put(`/orders/update_order/${orderId}`, orderData);
         return response.data;
@@ -113,7 +126,7 @@ export const editOrder = async (orderId, orderData) => {
     }
 };
 
-export const getUserOrders = async (accessToken) => {
+const getUserOrders = async (accessToken) => {
     try {
         const response = await apiClient.get('/orders/history', {
             headers: {
@@ -124,4 +137,19 @@ export const getUserOrders = async (accessToken) => {
     } catch (error) {
         handleApiError(error);
     }
+};
+
+export {
+    apiClient,
+    refreshToken,
+    checkAndRefreshToken,
+    loginUser,
+    registerUser,
+    logout,
+    getUserProfile,
+    getOrders,
+    createOrder,
+    editOrder,
+    getUserOrders,
+    handleApiError,
 };

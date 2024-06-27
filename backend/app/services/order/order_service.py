@@ -57,7 +57,7 @@ class OrderService:
         try:
             if 'prepared_by' in data:
                 prepared_by = data['prepared_by']
-                prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M')
+                prepared_by = datetime.strptime(prepared_by, '%Y-%m-%dT%H:%M')
                 order.prepared_by = prepared_by
 
             if 'phone_number' in data:

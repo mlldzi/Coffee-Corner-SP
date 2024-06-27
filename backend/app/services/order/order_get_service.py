@@ -10,7 +10,7 @@ class OrderGetService:
             "is_completed": order.is_completed,
             "prepared_by": order.prepared_by.strftime('%Y-%m-%d %H:%M'),
             "phone_number": order.phone_number,
-            "cart": order.cart,
+            "cart": order.cart.replace("{", "").replace("}", "").replace(",", ", "),
             "total_amount": order.total_amount
         }
 
@@ -33,13 +33,25 @@ class OrderGetService:
 
     @staticmethod
     def get_all_orders():
-        orders = Order.query.all()
+        orders = Order.query.order_by(Order.id.asc()).all()
+        formatted_orders = [OrderGetService.format_order(order) for order in orders]
+        return formatted_orders
+
+    @staticmethod
+    def get_all_orders_in_desc_order():
+        orders = Order.query.order_by(Order.id.desc()).all()
         formatted_orders = [OrderGetService.format_order(order) for order in orders]
         return formatted_orders
 
     @staticmethod
     def get_orders_by_phone_number(phone_number):
         orders = Order.query.filter_by(phone_number=phone_number).all()
+        formatted_orders = [OrderGetService.format_order(order) for order in orders]
+        return formatted_orders
+
+    @staticmethod
+    def get_orders_by_phone_number_in_desc_order(phone_number):
+        orders = Order.query.filter_by(phone_number=phone_number).order_by(Order.id.desc()).all()
         formatted_orders = [OrderGetService.format_order(order) for order in orders]
         return formatted_orders
 

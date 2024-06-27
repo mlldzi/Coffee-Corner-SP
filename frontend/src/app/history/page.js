@@ -2,29 +2,19 @@
 
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import styles from './history.module.css'; 
-import { getUserOrders } from '../services/api';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import styles from './history.module.css';
+import { getUserOrders, checkAndRefreshToken } from '../services/api';
 
 const HistoryPage = () => {
     const [orders, setOrders] = useState([]);
-    const router = useRouter();
 
     useEffect(() => {
         const loadUserOrders = async () => {
-            const accessToken = Cookies.get('csrf_access_token');
-            if (!accessToken) {
-                router.push('/login');
-                return;
-            }
-
             try {
+                const accessToken = await checkAndRefreshToken();
                 const userOrders = await getUserOrders(accessToken);
                 if (userOrders.success) {
-                    // Sort orders by ID in ascending order
-                    const sortedOrders = userOrders.orders.sort((a, b) => a.id - b.id);
-                    setOrders(sortedOrders);
+                    setOrders(userOrders.orders);
                 } else {
                     console.error('Ошибка загрузки заказов:', userOrders.msg);
                 }

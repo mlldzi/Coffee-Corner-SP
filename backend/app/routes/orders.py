@@ -23,7 +23,12 @@ def get_order(order_id):
 
 @orders_bp.route('/get_orders', methods=['GET'])
 def get_orders():
-    orders = OrderGetService.get_all_orders()
+    sort_flag = request.args.get('flag', 'asc')
+    if sort_flag.lower() == 'desc':
+        orders = OrderGetService.get_all_orders_in_desc_order()
+    else:
+        orders = OrderGetService.get_all_orders()
+
     return jsonify({"success": True, "orders": orders}), 200
 
 
@@ -44,14 +49,14 @@ def get_incomplete_orders():
 def get_user_order_history():
     user_id = get_jwt_identity()
     phone_number = UserService.get_phone_number_by_user_id(user_id)
-    orders = OrderGetService.get_orders_by_phone_number(phone_number)
+    orders = OrderGetService.get_orders_by_phone_number_in_desc_order(phone_number)
     return jsonify({"success": True, "orders": orders}), 200
 
 
 @orders_bp.route('/update_order/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     data = request.get_json()
-    order, msg = OrderService.update_order(order_id, **data)
+    order, msg = OrderService.update_order(order_id, data)
     status_code = 200 if order else 400
     return jsonify({"success": bool(order), "msg": msg}), status_code
 
