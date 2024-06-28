@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  test-backend:
+    container_name: test_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    environment:
+      DEBUG: True
+      SQLALCHEMY_TRACK_MODIFICATIONS: True
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password 
+    volumes:
+      - ./backend:/app
+    secrets:
+      - postgres_user
+      - postgres_password
+
+secrets:
+  postgres_user:
+    file: ./backend/secrets/postgres_user.txt
+  postgres_password:
+    file: ./backend/secrets/postgres_password.txt

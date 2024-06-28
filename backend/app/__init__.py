@@ -7,10 +7,13 @@ db = SQLAlchemy()
 jwt = JWTManager()
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
     CORS(app, supports_credentials=True)
-    app.config.from_object('app.config.Config')
+    if test_config:
+        app.config.from_object('app.config.Config')
+    else:
+        app.config.from_object('app.config.Config')
 
     db.init_app(app)
     jwt.init_app(app)

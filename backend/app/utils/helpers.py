@@ -20,7 +20,7 @@ def generate_auth_response(user_id):
     access_token = create_access_token(identity=user_id, expires_delta=timedelta(hours=1))
     refresh_token = create_refresh_token(identity=user_id, expires_delta=timedelta(days=7))
 
-    response = jsonify({"success": True})
+    response = jsonify({"success": True, "access_token": access_token})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
 

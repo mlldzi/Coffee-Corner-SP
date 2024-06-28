@@ -53,7 +53,7 @@ def get_user_order_history():
     return jsonify({"success": True, "orders": orders}), 200
 
 
-@orders_bp.route('/update_order/<int:order_id>', methods=['PUT'])
+@orders_bp.route('/update_order/<string:order_id>', methods=['PUT'])
 def update_order(order_id):
     data = request.get_json()
     order, msg = OrderService.update_order(order_id, data)
@@ -61,7 +61,7 @@ def update_order(order_id):
     return jsonify({"success": bool(order), "msg": msg}), status_code
 
 
-@orders_bp.route('/delete_order/<int:order_id>', methods=['DELETE'])
+@orders_bp.route('/delete_order/<string:order_id>', methods=['DELETE'])
 def delete_order(order_id):
     success, msg = OrderService.delete_order(order_id)
     status_code = 200 if success else 404

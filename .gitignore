@@ -154,8 +154,8 @@ README.Docker.md
 .dockerignore
 <<<<<<< Updated upstream
 
-backend/log.txt
 =======
 js-cookie
 .package-lock.json
 >>>>>>> Stashed changes
+backend/token.txt

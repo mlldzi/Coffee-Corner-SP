@@ -18,7 +18,7 @@ class OrderService:
         total_amount = data['total_amount']
 
         try:
-            prepared_by = datetime.strptime(prepared_by, '%Y-%m-%d %H:%M')
+            prepared_by = datetime.strptime(prepared_by, '%Y-%m-%dT%H:%M')
         except ValueError:
             return None, "Неверный формат времени"
 
@@ -51,8 +51,8 @@ class OrderService:
             except ValueError:
                 return None, "Неверный формат order_id"
 
-            if not order:
-                return None, "Заказ не найден"
+        if not order:
+            return None, "Заказ не найден"
 
         try:
             if 'prepared_by' in data:
@@ -80,7 +80,15 @@ class OrderService:
 
     @staticmethod
     def delete_order(order_id):
-        order = Order.query.get(order_id)
+        if order_id == "latest":
+            order = Order.query.order_by(Order.id.desc()).first()
+        else:
+            try:
+                order_id = int(order_id)
+                order = Order.query.get(order_id)
+            except ValueError:
+                return False, "Неверный формат order_id"
+
         if not order:
             return False, "Заказ не найден"
 

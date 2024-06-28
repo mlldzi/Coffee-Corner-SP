@@ -59,3 +59,14 @@ class AuthService:
         db.session.commit()
 
         return user, "Профиль успешно обновлен"
+
+    @staticmethod
+    def delete_user_profile(user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return None, "Пользователь не найден"
+
+        db.session.delete(user)
+        db.session.commit()
+
+        return user, "Профиль успешно удален"

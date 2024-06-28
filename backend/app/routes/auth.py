@@ -1,7 +1,7 @@
 from flask import request, jsonify, Blueprint
-from flask_jwt_extended import (
-    create_access_token, get_jwt_identity, set_access_cookies, unset_jwt_cookies, jwt_required
-)
+from flask_jwt_extended import (get_jwt_identity, unset_jwt_cookies,
+        jwt_required, set_access_cookies, create_access_token)
+from datetime import timedelta
 from app.services import AuthService
 from app.utils import generate_auth_response
 
@@ -68,3 +68,25 @@ def logout():
     response = jsonify({"success": True})
     unset_jwt_cookies(response)
     return response, 200
+
+
+@auth_bp.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity, expires_delta=timedelta(hours=1))
+    response = jsonify({"refresh": True})
+    set_access_cookies(response, access_token)
+    return response, 200
+
+
+@auth_bp.route('/profile', methods=['DELETE'])
+@jwt_required()
+def delete_profile():
+    identity = get_jwt_identity()
+    user, msg = AuthService.delete_user_profile(identity)
+
+    if not user:
+        return jsonify({"success": False, "msg": msg}), 404 if msg == "Пользователь не найден" else 409
+
+    return jsonify({"success": True, "msg": msg}), 200

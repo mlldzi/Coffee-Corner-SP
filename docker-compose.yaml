@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   backend:
+    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -13,7 +14,7 @@ services:
       DEBUG: True
       SQLALCHEMY_TRACK_MODIFICATIONS: True
       POSTGRES_PORT: 5432
-      POSTGRES_DB: db
+      POSTGRES_DB: postgres
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     depends_on:
@@ -24,6 +25,7 @@ services:
       - postgres_password
 
   frontend:
+    container_name: frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -36,9 +38,10 @@ services:
     restart: on-failure
 
   db:
+    container_name: db_postgres
     image: postgres:13
     environment:
-      POSTGRES_DB: db
+      POSTGRES_DB: postgres
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     ports:
@@ -51,6 +54,7 @@ services:
       - postgres_password
       
   pgadmin:
+    container_name: pgadmin
     image: dpage/pgadmin4
     ports:
       - "5050:80"
