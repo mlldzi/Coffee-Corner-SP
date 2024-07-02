@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import (get_jwt_identity, unset_jwt_cookies,
-        jwt_required, set_access_cookies, create_access_token)
+                                jwt_required, set_access_cookies, create_access_token)
 from datetime import timedelta
 from app.services import AuthService
 from app.utils import generate_auth_response
@@ -74,7 +74,7 @@ def logout():
 @jwt_required(refresh=True)
 def refresh():
     identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity, expires_delta=timedelta(hours=1))
+    access_token = create_access_token(identity=identity)
     response = jsonify({"refresh": True})
     set_access_cookies(response, access_token)
     return response, 200

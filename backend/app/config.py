@@ -1,4 +1,5 @@
 from os import environ, path, getenv
+from datetime import timedelta
 
 
 def reading_user_file():
@@ -34,6 +35,8 @@ class Config(object):
 
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/'
+    JWT_ACCESS_EXPIRES = timedelta(hours=1)
+    JWT_REFRESH_EXPIRES = timedelta(days=7)
     JWT_COOKIE_SECURE = True
     JWT_COOKIE_CSRF_PROTECT = True
     JWT_ACCESS_CSRF_HEADER_NAME = 'X-CSRF-TOKEN'

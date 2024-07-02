@@ -159,3 +159,4 @@ js-cookie
 .package-lock.json
 >>>>>>> Stashed changes
 backend/token.txt
+backend/log.txt

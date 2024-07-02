@@ -14,14 +14,13 @@ const apiClient = axios.create({
 
 const refreshToken = async () => {
     try {
-        const response = await apiClient.post('/refresh', {
+        const response = await apiClient.post('/refresh', null, {
             headers: {
                 'X-CSRF-TOKEN': Cookies.get('csrf_refresh_token')
             }
         });
-        if (response.data.access_token) {
-            Cookies.set('csrf_access_token', response.data.access_token);
-            return response.data.access_token;
+        if (response.data.refresh) {
+            return Cookies.get('csrf_access_token');
         }
         return null;
     } catch (error) {
@@ -40,7 +39,6 @@ const checkAndRefreshToken = async () => {
     }
     return accessToken;
 };
-
 
 const handleApiError = async (error) => {
     if (error.response) {
