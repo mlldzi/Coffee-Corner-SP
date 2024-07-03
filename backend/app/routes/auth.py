@@ -1,7 +1,6 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import (get_jwt_identity, unset_jwt_cookies,
                                 jwt_required, set_access_cookies, create_access_token)
-from datetime import timedelta
 from app.services import AuthService
 from app.utils import generate_auth_response
 

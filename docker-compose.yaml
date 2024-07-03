@@ -1,4 +1,10 @@
 version: '3.9'
+x-common_environment: &common_environment
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: postgres
+  POSTGRES_USER_FILE: /run/secrets/postgres_user
+  POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+  SQLALCHEMY_TRACK_MODIFICATIONS: True
 
 services:
   backend:
@@ -11,12 +17,8 @@ services:
     volumes:
       - ./backend:/app
     environment:
+      <<: *common_environment
       DEBUG: True
-      SQLALCHEMY_TRACK_MODIFICATIONS: True
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: postgres
-      POSTGRES_USER_FILE: /run/secrets/postgres_user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     depends_on:
       - db
     restart: on-failure
@@ -41,9 +43,7 @@ services:
     container_name: db_postgres
     image: postgres:13
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER_FILE: /run/secrets/postgres_user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      <<: *common_environment
     ports:
       - "5433:5432"
     volumes:
@@ -52,7 +52,7 @@ services:
     secrets:
       - postgres_user
       - postgres_password
-      
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -62,7 +62,38 @@ services:
       PGADMIN_DEFAULT_EMAIL: "ter@example.com"
       PGADMIN_DEFAULT_PASSWORD: "ter"
     restart: always
-    
+
+  reset_db:
+    container_name: reset_db
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: python run.py reset_db
+    environment:
+      <<: *common_environment
+      DEBUG: True
+    depends_on:
+      - db
+    restart: on-failure
+    secrets:
+      - postgres_user
+      - postgres_password
+
+  test_backend:
+    container_name: test_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: python -m unittest discover -s tests
+    environment:
+      <<: *common_environment
+      DEBUG: True
+    volumes:
+      - ./backend:/app
+    secrets:
+      - postgres_user
+      - postgres_password
+
 secrets:
   postgres_user:
     file: ./backend/secrets/postgres_user.txt
