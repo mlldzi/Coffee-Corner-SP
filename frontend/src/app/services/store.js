@@ -13,6 +13,9 @@ const useAuthStore = create((set) => ({
     },
     addToOrder: (item) => set((state) => ({orders: [...state.orders, item]})),
     clearOrders: () => set({orders: []}),
+    removeOrder: (index) => set((state) => ({
+        orders: state.orders.filter((_, i) => i !== index)
+    })),
 }));
 
 export default useAuthStore;

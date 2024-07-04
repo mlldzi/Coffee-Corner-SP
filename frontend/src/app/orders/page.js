@@ -1,8 +1,7 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import Header from '../components/Header';
-import VideoContainer from '../components/VideoContainer';
+import Header from '../components/Header';;
 import styles from './orders.module.css';
 import useAuthStore from '../services/store';
 import {getOrders, editOrder, checkAndRefreshToken} from '../services/api';

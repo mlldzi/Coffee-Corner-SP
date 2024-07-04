@@ -1,95 +1,97 @@
-/* menu.module.css */
-
 .videoBackground {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .videoWrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .video {
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
 }
 
 .container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
-  overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
+    overflow-y: auto;
 }
 
 .menuContainer {
-  width: 100%;
-  max-width: 1500px;
-  height: 100%;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  margin-left: 10px; /* Сместим контейнер чуть правее */
+    width: 100%;
+    max-width: 1500px;
+    height: 550px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.swiper {
+    padding-left: 20px;
 }
 
 .swiper-pagination-bullet {
-  background: #000 !important;
+    background: #000 !important;
 }
 
 .swiper-pagination {
-  bottom: -30px !important; /* Смещение точек пагинации ниже */
+    bottom: 0 !important;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: #875151 !important;
+    color: #875151 !important;
 }
 
-/* Адаптивные стили */
+/* Responsive Styles */
 @media (max-width: 1200px) {
-  .menuContainer {
-    width: 90%;
-  }
+    .menuContainer {
+        width: 90%;
+    }
 }
 
 @media (max-width: 992px) {
-  .menuContainer {
-    width: 80%;
-  }
+    .menuContainer {
+        width: 80%;
+    }
 }
 
 @media (max-width: 768px) {
-  .menuContainer {
-    width: 70%;
-  }
+    .menuContainer {
+        width: 70%;
+    }
 }
 
 @media (max-width: 576px) {
-  .menuContainer {
-    width: 90%;
-    padding: 20px;
-  }
+    .menuContainer {
+        width: 90%;
+        padding: 20px;
+    }
 }
