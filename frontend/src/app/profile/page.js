@@ -8,19 +8,24 @@ import {getUserProfile, logout, checkAndRefreshToken} from '../services/api';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadProfile = async () => {
             try {
-                const accessToken = await checkAndRefreshToken();
-                const profileData = await getUserProfile(accessToken);
+                await checkAndRefreshToken();
+                const profileData = await getUserProfile();
+
                 if (profileData.success) {
                     setProfile(profileData.profile);
+                    setLoading(false);
                 } else {
                     console.error('Ошибка загрузки профиля:', profileData.msg);
+                    setLoading(false);
                 }
             } catch (error) {
                 console.error('Ошибка загрузки профиля:', error);
+                setTimeout(loadProfile, 1000);
             }
         };
 
@@ -40,14 +45,16 @@ const ProfilePage = () => {
             <div className={styles.content}>
                 <Header/>
                 <div className={styles.profileContainer}>
-                    {profile ? (
+                    {loading ? (
+                        <h2>Загрузка...</h2>
+                    ) : profile ? (
                         <>
                             <h2>Привет, {profile.full_name}!</h2>
                             <p className={styles.profileField}>Номер телефона: {profile.phone_number}</p>
                             <p className={styles.profileField}>Бонусные баллы: {profile.bonus_points}</p>
                         </>
                     ) : (
-                        <h2>Загрузка...</h2>
+                        <h2>Ошибка загрузки профиля</h2>
                     )}
                 </div>
                 <div className={styles.linksContainer}>

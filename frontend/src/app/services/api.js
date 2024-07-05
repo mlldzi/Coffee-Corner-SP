@@ -13,6 +13,30 @@ const apiClient = axios.create({
     },
 });
 
+const handleApiError = async (error) => {
+    if (error.response) {
+        if (error.response.status === 401 && error.response.data.msg === 'Token has expired') {
+            try {
+                await refreshToken();
+                const originalRequest = error.config;
+                const newAccessToken = Cookies.get('csrf_access_token');
+                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                originalRequest.headers['X-CSRF-TOKEN'] = newAccessToken;
+                return apiClient(originalRequest);
+            } catch (refreshError) {
+                console.error('Error refreshing token:', refreshError);
+                window.location.href = '/login';
+                throw refreshError;
+            }
+        }
+        throw error.response.data;
+    } else {
+        console.error('API Error:', error.message);
+        throw error.message;
+    }
+};
+
+
 const refreshToken = async () => {
     try {
         const response = await apiClient.post('/refresh', null, {
@@ -34,32 +58,12 @@ const checkAndRefreshToken = async () => {
     if (!accessToken) {
         const newAccessToken = await refreshToken();
         if (!newAccessToken) {
+            window.location.href = '/login';
             throw new Error('Ошибка обновления access token, скорее всего нет refresh token');
         }
         return newAccessToken;
     }
     return accessToken;
-};
-
-const handleApiError = async (error) => {
-    if (error.response) {
-        if (error.response.status === 401 && error.response.data.msg === 'Токен истек') {
-            try {
-                await refreshToken();
-                const originalRequest = error.config;
-                const newAccessToken = Cookies.get('csrf_access_token');
-                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                return apiClient(originalRequest);
-            } catch (refreshError) {
-                console.error('Ошибка обновления токена:', refreshError);
-                window.location.href = '/login';
-            }
-        }
-        throw error.response.data;
-    } else {
-        console.error('API Error:', error.message);
-        throw error.message;
-    }
 };
 
 const loginUser = async (credentials) => {
@@ -89,8 +93,9 @@ const logout = async () => {
     }
 };
 
-const getUserProfile = async (accessToken) => {
+const getUserProfile = async () => {
     try {
+        const accessToken = await checkAndRefreshToken();
         const response = await apiClient.get('/profile', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
