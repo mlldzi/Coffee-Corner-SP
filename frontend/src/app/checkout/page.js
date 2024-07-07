@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import styles from './checkout.module.css';
 import {useRouter} from 'next/navigation';
+import {getUserProfile, checkAndRefreshToken} from '../services/api';
 
 const Checkout = () => {
     const [name, setName] = useState('');
@@ -15,10 +16,21 @@ const Checkout = () => {
         const cart = sessionStorage.getItem('cart');
         if (cart) {
             setCartItems(JSON.parse(cart));
-        }
-        if (!cart) {
+        } else {
             router.push('/menu');
         }
+
+        const fetchUserData = async () => {
+            if (await checkAndRefreshToken()) {
+                const userData = await getUserProfile();
+                if (userData) {
+                    setName(userData.profile.full_name);
+                    setPhoneNumber(userData.profile.phone_number);
+                }
+            }
+        };
+
+        fetchUserData();
     }, [router]);
 
     const handleSubmit = (event) => {

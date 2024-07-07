@@ -21,7 +21,7 @@ const OrdersPage = () => {
     useEffect(() => {
         const loadOrders = async () => {
             try {
-                const accessToken = await checkAndRefreshToken();
+                await checkAndRefreshToken();
                 const ordersData = await getOrders('desc');
                 if (ordersData.success) {
                     setOrders(ordersData.orders);

@@ -56,6 +56,7 @@ const refreshToken = async () => {
 const checkAndRefreshToken = async () => {
     const accessToken = Cookies.get('csrf_access_token');
     if (!accessToken) {
+        if (!Cookies.get('csrf_refresh_token')) return false;
         const newAccessToken = await refreshToken();
         if (!newAccessToken) {
             window.location.href = '/login';
@@ -65,6 +66,7 @@ const checkAndRefreshToken = async () => {
     }
     return accessToken;
 };
+
 
 const loginUser = async (credentials) => {
     try {
