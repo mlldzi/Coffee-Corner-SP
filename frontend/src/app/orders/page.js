@@ -42,14 +42,19 @@ const OrdersPage = () => {
     };
 
     const handleEditClick = (order) => {
-        setEditingOrder(order.id);
-        setFormData({
-            phone_number: order.phone_number,
-            cart: order.cart,
-            prepared_by: new Date(order.prepared_by).toISOString().slice(0, 16),
-            total_amount: order.total_amount
-        });
-    };
+    setEditingOrder(order.id);
+
+    const utcPlus10Time = new Date(order.prepared_by);
+    utcPlus10Time.setHours(utcPlus10Time.getHours() + 10); 
+
+    setFormData({
+        phone_number: order.phone_number,
+        cart: order.cart,
+        prepared_by: utcPlus10Time.toISOString().slice(0, 16),
+        total_amount: order.total_amount
+    });
+};
+
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
