@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import styles from './history.module.css';
-import { getUserOrders, checkAndRefreshToken } from '../services/api';
+import {getUserOrders, checkAndRefreshToken} from '../services/api';
 import Link from 'next/link';
 
 const HistoryPage = () => {
@@ -33,29 +33,31 @@ const HistoryPage = () => {
                 <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
             </div>
             <div className={styles.container}>
-                <Header />
+                <Header/>
                 <div className={styles.ordersContainer}>
                     {orders.length > 0 ? (
                         <table className={styles.ordersTable}>
                             <thead>
-                                <tr>
-                                    <th>ID заказа</th>
-                                    <th>Номер телефона</th>
-                                    <th>Корзина</th>
-                                    <th>К какому времени приготовить</th>
-                                    <th>Сумма</th>
-                                </tr>
+                            <tr>
+                                <th>ID заказа</th>
+                                <th>Номер телефона</th>
+                                <th>Корзина</th>
+                                <th>К какому времени приготовить</th>
+                                <th>Готовность</th>
+                                <th>Сумма</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {orders.map(order => (
-                                    <tr key={order.id}>
-                                        <td>{order.id}</td>
-                                        <td>{order.phone_number}</td>
-                                        <td>{order.cart}</td>
-                                        <td>{new Date(order.prepared_by).toLocaleString()}</td>
-                                        <td>{order.total_amount}</td>
-                                    </tr>
-                                ))}
+                            {orders.map(order => (
+                                <tr key={order.id}>
+                                    <td>{order.id}</td>
+                                    <td>{order.phone_number}</td>
+                                    <td>{order.cart}</td>
+                                    <td>{new Date(order.prepared_by).toLocaleString()}</td>
+                                    <td>{order.is_completed ? 'Да' : 'Нет'}</td>
+                                    <td>{order.total_amount}</td>
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
                     ) : (
@@ -63,7 +65,7 @@ const HistoryPage = () => {
                     )}
                 </div>
                 <Link href="/" className={styles.link_button}>
-                     Главная
+                    Главная
                 </Link>
             </div>
         </div>

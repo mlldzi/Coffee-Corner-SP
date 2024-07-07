@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import Header from '../components/Header';;
+import Header from '../components/Header';
 import styles from './orders.module.css';
 import useAuthStore from '../services/store';
 import {getOrders, editOrder, checkAndRefreshToken} from '../services/api';
@@ -16,6 +16,7 @@ const OrdersPage = () => {
         cart: '',
         prepared_by: '',
         total_amount: '',
+        is_completed: false,
     });
 
     useEffect(() => {
@@ -42,25 +43,25 @@ const OrdersPage = () => {
     };
 
     const handleEditClick = (order) => {
-    setEditingOrder(order.id);
+        setEditingOrder(order.id);
 
-    const utcPlus10Time = new Date(order.prepared_by);
-    utcPlus10Time.setHours(utcPlus10Time.getHours() + 10); 
+        const utcPlus10Time = new Date(order.prepared_by);
+        utcPlus10Time.setHours(utcPlus10Time.getHours() + 10);
 
-    setFormData({
-        phone_number: order.phone_number,
-        cart: order.cart,
-        prepared_by: utcPlus10Time.toISOString().slice(0, 16),
-        total_amount: order.total_amount
-    });
-};
-
+        setFormData({
+            phone_number: order.phone_number,
+            cart: order.cart,
+            prepared_by: utcPlus10Time.toISOString().slice(0, 16),
+            total_amount: order.total_amount,
+            is_completed: order.is_completed
+        });
+    };
 
     const handleInputChange = (e) => {
-        const {name, value} = e.target;
+        const {name, value, type, checked} = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         }));
     };
 
@@ -83,8 +84,8 @@ const OrdersPage = () => {
     return (
         <div className={styles.videoBackground}>
             <div className={styles.videoWrapper}>
-                 <video className={styles.video} src="/video.mp4" autoPlay loop muted />
-             </div>
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
+            </div>
             <div className={styles.container}>
                 <Header/>
                 <div className={styles.ordersContainer}>
@@ -97,6 +98,7 @@ const OrdersPage = () => {
                                 <th>Корзина</th>
                                 <th>К какому времени приготовить</th>
                                 <th>Сумма</th>
+                                <th>Завершено</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
@@ -139,6 +141,14 @@ const OrdersPage = () => {
                                                 />
                                             </td>
                                             <td>
+                                                <input
+                                                    type="checkbox"
+                                                    name="is_completed"
+                                                    checked={formData.is_completed}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </td>
+                                            <td>
                                                 <button className={styles.button} onClick={handleSaveClick}>Сохранить
                                                 </button>
                                             </td>
@@ -150,6 +160,7 @@ const OrdersPage = () => {
                                             <td>{order.cart}</td>
                                             <td>{new Date(order.prepared_by).toLocaleString()}</td>
                                             <td>{order.total_amount}</td>
+                                            <td>{order.is_completed ? 'Да' : 'Нет'}</td>
                                             <td>
                                                 <button className={styles.button}
                                                         onClick={() => handleEditClick(order)}>Редактировать

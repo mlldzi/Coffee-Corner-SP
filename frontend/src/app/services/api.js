@@ -149,6 +149,15 @@ const getUserOrders = async (accessToken) => {
     }
 };
 
+const deleteOrder = async (orderId) => {
+    try {
+        const response = await apiClient.delete(`/orders/delete_order/${orderId}`);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+    }
+};
+
 export {
     apiClient,
     refreshToken,
@@ -162,4 +171,5 @@ export {
     editOrder,
     getUserOrders,
     handleApiError,
+    deleteOrder,
 };
