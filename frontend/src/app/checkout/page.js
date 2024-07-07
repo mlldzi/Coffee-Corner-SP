@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import styles from './checkout.module.css';
 import {useRouter} from 'next/navigation';
-import {getUserProfile, checkAndRefreshToken} from '../services/api';
+import {getUserProfile, checkAndRefreshToken, createOrder} from '../services/api';
 
 const Checkout = () => {
     const [name, setName] = useState('');
@@ -15,7 +15,8 @@ const Checkout = () => {
     useEffect(() => {
         const cart = sessionStorage.getItem('cart');
         if (cart) {
-            setCartItems(JSON.parse(cart));
+            const parsedCart = JSON.parse(cart);
+            setCartItems(parsedCart);
         } else {
             router.push('/menu');
         }
@@ -33,9 +34,27 @@ const Checkout = () => {
         fetchUserData();
     }, [router]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Оплата отправлена:', {name, phoneNumber, preparedBy});
+
+        const orderData = {
+            phone_number: phoneNumber,
+            cart: cartItems.map(item => item.name).join(', '),
+            prepared_by: preparedBy,
+            total_amount: 123321, // TODO: сделать цену каждому кофе
+        };
+
+        try {
+            const response = await createOrder(orderData);
+            if (response.success) {
+                console.log('Заказ успешно создан:', response.msg);
+                router.push('/history');
+            } else {
+                console.error('Ошибка при создании заказа:', response.msg);
+            }
+        } catch (error) {
+            console.error('Ошибка при отправке заказа:', error);
+        }
     };
 
     return (
