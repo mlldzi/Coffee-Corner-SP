@@ -95,3 +95,17 @@
         padding: 20px;
     }
 }
+
+.checkoutButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkoutButton:hover {
+    background-color: #005bb5;
+}

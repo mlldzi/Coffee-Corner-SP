@@ -1,3 +1,4 @@
+/* Добавьте эти стили в ваш MenuItem.module.css */
 .menuItem {
   display: flex;
   flex-direction: column;
@@ -11,13 +12,10 @@
   overflow: hidden;
   transition: transform 0.3s ease;
   position: relative;
-  left:4%;
+  left: 4%;
 }
 
-.menuItem:hover {
-  transform: scale(1.1); /* Увеличение карточки при наведении */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+
 
 .imageContainer {
   width: 100%;
@@ -76,4 +74,9 @@
 
 .addButton:hover {
   background-color: #704040;
+}
+
+.addedButton {
+  background-color: #aaa;
+  cursor: default;
 }
