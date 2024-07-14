@@ -34,13 +34,14 @@
     background: rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Изменено с center на flex-start */
     align-items: center;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     position: relative;
     z-index: 1;
+    overflow-y: auto; /* Добавлено для вертикальной прокрутки */
 }
 
 .title {
@@ -145,4 +146,3 @@
         font-size: 14px;
     }
 }
-  

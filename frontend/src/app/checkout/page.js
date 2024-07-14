@@ -1,9 +1,9 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './checkout.module.css';
-import {useRouter} from 'next/navigation';
-import {getUserProfile, checkAndRefreshToken, createOrder} from '../services/api';
+import { useRouter } from 'next/navigation';
+import { getUserProfile, checkAndRefreshToken, createOrder } from '../services/api';
 import Header from '../components/Header';
 import useAuthStore from '../services/store';
 
@@ -40,7 +40,7 @@ const Checkout = () => {
     const calculatePrice = () => {
         let total = 0;
         cartItems.forEach(item => {
-            total += item.price;
+            total += item.price * item.quantity;
         });
         return total;
     };
@@ -50,7 +50,7 @@ const Checkout = () => {
 
         const orderData = {
             phone_number: phoneNumber,
-            cart: cartItems.map(item => item.name).join(', '),
+            cart: cartItems.map(item => `${item.name} x ${item.quantity}`).join(', '),
             prepared_by: preparedBy,
             total_amount: calculatePrice(),
         };
@@ -68,6 +68,7 @@ const Checkout = () => {
             console.error('Ошибка при отправке заказа:', error);
         }
     };
+
     const handleReturnToMenu = () => {
         router.push('/menu');
     };
@@ -75,10 +76,10 @@ const Checkout = () => {
     return (
         <div className={styles.videoBackground}>
             <div className={styles.videoWrapper}>
-                <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted />
             </div>
             <div className={styles.checkoutContainer}>
-                <Header/>
+                <Header />
                 <h1 className={styles.title}>Оплата</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
@@ -117,19 +118,17 @@ const Checkout = () => {
                     <div className={styles.orderSummary}>
                         <h2>Ваша корзина</h2>
                         <p className={styles.price}>Итого: {calculatePrice()} руб.</p>
-                        <p className={styles.price}>В корзине: {cartItems.length} кофе</p>
+                        <p className={styles.price}>В корзине: {cartItems.reduce((acc, item) => acc + item.quantity, 0)} кофе</p>
                         {cartItems.map((item, index) => (
                             <div key={index} className={styles.cartItem}>
                                 <div>
-                                    <p className={styles.cartItemName}>{item.name} - {item.price} руб.</p>
+                                    <p className={styles.cartItemName}>{item.name} x {item.quantity} - {item.price * item.quantity} руб.</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className={styles.formGroup}>
-                        <button type="button" onClick={handleReturnToMenu} className={styles.submitButton}>Вернуться в
-                            меню
-                        </button>
+                        <button type="button" onClick={handleReturnToMenu} className={styles.submitButton}>Вернуться в меню</button>
                         <button type="submit" className={styles.submitButton}>Отправить заказ</button>
                     </div>
                 </form>

@@ -1,4 +1,3 @@
-// services/store.js
 import { create } from 'zustand';
 import Cookies from 'js-cookie';
 
@@ -12,10 +11,26 @@ const useAuthStore = create((set) => ({
         Cookies.remove('csrf_access_token');
         Cookies.remove('csrf_refresh_token');
     },
-    addToOrder: (item) => set((state) => ({ orders: [...state.orders, item] })),
+    addToOrder: (item) => set((state) => {
+        const existingOrder = state.orders.find(order => order.name === item.name);
+        if (existingOrder) {
+            return {
+                orders: state.orders.map(order => 
+                    order.name === item.name ? { ...order, quantity: order.quantity + 1 } : order
+                )
+            };
+        } else {
+            return { orders: [...state.orders, { ...item, quantity: 1 }] };
+        }
+    }),
+    updateOrderQuantity: (itemName, quantity) => set((state) => ({
+        orders: state.orders.map(order => 
+            order.name === itemName ? { ...order, quantity: Math.max(0, order.quantity + quantity) } : order
+        ).filter(order => order.quantity > 0)
+    })),
     clearOrders: () => set({ orders: [] }),
-    removeOrder: (index) => set((state) => ({
-        orders: state.orders.filter((_, i) => i !== index)
+    removeOrder: (itemName) => set((state) => ({
+        orders: state.orders.filter(order => order.name !== itemName)
     })),
 }));
 
