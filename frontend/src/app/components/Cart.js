@@ -5,13 +5,11 @@ import styles from './Cart.module.css';
 
 const Cart = () => {
     const orders = useAuthStore((state) => state.orders);
-    const clearOrders = useAuthStore((state) => state.clearOrders);
     const removeOrder = useAuthStore((state) => state.removeOrder);
     const router = useRouter();
 
     const handleCheckout = () => {
         sessionStorage.setItem('cart', JSON.stringify(orders));
-        clearOrders();
         router.push('/checkout');
     };
 
@@ -30,9 +28,9 @@ const Cart = () => {
                         <ul>
                             {orders.map((item, index) => (
                                 <li key={index} className={styles.cartItem}>
-                                    {item.name}
-                                    <button onClick={() => handleRemove(index)}
-                                            className={styles.removeButton}>Удалить
+                                    <span>{item.name}</span>
+                                    <button onClick={() => handleRemove(index)} className={styles.removeButton}>
+                                        &#10006;
                                     </button>
                                 </li>
                             ))}

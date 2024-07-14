@@ -35,13 +35,9 @@
 
 .removeButton {
     padding: 5px 10px;
-    background-color: #ae1a1a;
-    color: white;
+    background-color: white;
+    color: darkred;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.removeButton:hover {
-    background-color: #cc0000;
 }
