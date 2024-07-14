@@ -8,25 +8,18 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import MenuItem from '../components/MenuItem';
 import Header from '../components/Header';
-import { useRouter } from 'next/navigation';
-import useAuthStore from '../services/store'; // Добавляем импорт
+import Cart from '../components/Cart';
 import styles from './menu.module.css';
 
 const Menu = () => {
     const [menuItems, setMenuItems] = useState([]);
-    const router = useRouter();
 
     useEffect(() => {
         fetch('/menu/menuItems.json')
             .then(response => response.json())
             .then(data => setMenuItems(data))
-            .catch(error => console.error('Ошибка загрузки пунктов меню:', error));
+            .catch(error => console.error('Ошибка при загрузке меню:', error));
     }, []);
-
-    const handleGoToCheckout = () => {
-        sessionStorage.setItem('cart', JSON.stringify(useAuthStore.getState().orders));
-        router.push('/checkout');
-    };
 
     return (
         <div className={styles.videoBackground}>
@@ -56,9 +49,7 @@ const Menu = () => {
                         ))}
                     </Swiper>
                 </div>
-                <button onClick={handleGoToCheckout} className={styles.checkoutButton}>
-                    Перейти к оплате
-                </button>
+                <Cart />
             </div>
         </div>
     );

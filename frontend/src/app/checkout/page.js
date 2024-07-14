@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './checkout.module.css';
-import { useRouter } from 'next/navigation';
-import { getUserProfile, checkAndRefreshToken, createOrder } from '../services/api';
+import {useRouter} from 'next/navigation';
+import {getUserProfile, checkAndRefreshToken, createOrder} from '../services/api';
 import Header from '../components/Header';
 
 const Checkout = () => {
@@ -61,10 +61,10 @@ const Checkout = () => {
     return (
         <div className={styles.videoBackground}>
             <div className={styles.videoWrapper}>
-                <video className={styles.video} src="/video.mp4" autoPlay loop muted />
+                <video className={styles.video} src="/video.mp4" autoPlay loop muted/>
             </div>
             <div className={styles.checkoutContainer}>
-                <Header />
+                <Header/>
                 <h1 className={styles.title}>Оплата</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
