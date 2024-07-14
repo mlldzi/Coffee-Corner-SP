@@ -11,7 +11,7 @@ def show_routes():
     routes = []
     for rule in current_app.url_map.iter_rules():
         methods = ', '.join(sorted(rule.methods))
-        route = f"{rule.rule} (Methods: {methods})"
+        route = f"{rule.rule} (Методы: {methods})"
         routes.append(route)
     return "<br>".join(routes)
 
@@ -20,7 +20,18 @@ def generate_auth_response(user_id):
     access_token = create_access_token(identity=user_id, expires_delta=timedelta(hours=1))
     refresh_token = create_refresh_token(identity=user_id, expires_delta=timedelta(days=7))
 
-    response = jsonify({"success": True, "access_token": access_token})
+    response = jsonify({"success": True, "access_token": access_token, "refresh_token": refresh_token})
+    set_access_cookies(response, access_token)
+    set_refresh_cookies(response, refresh_token)
+
+    return response
+
+
+def generate_refresh_response(user_id):
+    access_token = create_access_token(identity=user_id, expires_delta=timedelta(hours=1))
+    refresh_token = create_refresh_token(identity=user_id, expires_delta=timedelta(days=7))
+
+    response = jsonify({"refresh": True})
     set_access_cookies(response, access_token)
     set_refresh_cookies(response, refresh_token)
 
