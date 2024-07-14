@@ -24,6 +24,7 @@ const MenuItem = ({item}) => {
             </div>
             <div className={styles.content}>
                 <h3 className={styles.title}>{item.name}</h3>
+                <p className={styles.price}>₽{item.price}</p>
                 <p className={styles.description}>{description}</p>
             </div>
             <button onClick={handleAddToOrder} className={styles.addButton}>Добавить в заказ</button>

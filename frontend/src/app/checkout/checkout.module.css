@@ -6,9 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .videoWrapper {
+}
+
+.videoWrapper {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,15 +19,15 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-  }
-  
-  .video {
+}
+
+.video {
     min-width: 100%;
     min-height: 100%;
     object-fit: cover;
-  }
+}
 
-  .checkoutContainer {
+.checkoutContainer {
     width: 100%;
     max-width: 600px;
     height: 100vh;
@@ -41,43 +41,43 @@
     border-radius: 8px;
     position: relative;
     z-index: 1;
-  }
-  
-  .title {
+}
+
+.title {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  .form {
+}
+
+.form {
     display: flex;
     flex-direction: column;
     width: 100%;
-  }
-  
-  .formGroup {
+}
+
+.formGroup {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .label {
+}
+
+.label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
-  }
-  
-  .input {
+}
+
+.input {
     width: 100%;
     max-width: 400px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  .submitButton {
+}
+
+.submitButton {
     width: 100%;
     max-width: 400px;
     padding: 10px 20px;
@@ -89,53 +89,60 @@
     font-size: 16px;
     margin-top: 20px;
     transition: background-color 0.3s;
-  }
-  
-  .submitButton:hover {
+}
+
+.submitButton:hover {
     background-color: rgba(255, 255, 255, 0.6);
     color: #807e7e;
-  }
-  
-  .orderSummary {
+}
+
+.orderSummary {
     margin-top: 20px;
     width: 100%;
-  }
-  
-  .cartItem {
+}
+
+.price {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cartItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
-  }
-  
-  .cartItemName {
+}
+
+.cartItemName {
     font-size: 16px;
     font-weight: bold;
     color: #333;
-  }
+}
 
-  @media (max-width: 600px) {
+@media (max-width: 600px) {
     .checkoutContainer {
-      padding: 10px;
+        padding: 10px;
     }
-  
+
     .title {
-      font-size: 24px;
+        font-size: 24px;
     }
-  
+
     .input {
-      font-size: 14px;
-      padding: 8px;
+        font-size: 14px;
+        padding: 8px;
     }
-  
+
     .submitButton {
-      font-size: 14px;
-      padding: 8px 16px;
+        font-size: 14px;
+        padding: 8px 16px;
     }
-  
+
     .cartItemName {
-      font-size: 14px;
+        font-size: 14px;
     }
-  }
+}
   

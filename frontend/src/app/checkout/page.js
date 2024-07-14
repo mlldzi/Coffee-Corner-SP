@@ -35,6 +35,14 @@ const Checkout = () => {
         fetchUserData();
     }, [router]);
 
+    const calculatePrice = () => {
+        let total = 0;
+        cartItems.forEach(item => {
+            total += item.price;
+        });
+        return total;
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -42,7 +50,7 @@ const Checkout = () => {
             phone_number: phoneNumber,
             cart: cartItems.map(item => item.name).join(', '),
             prepared_by: preparedBy,
-            total_amount: 123321, // TODO: сделать цену каждому кофе
+            total_amount: calculatePrice(),
         };
 
         try {
@@ -102,10 +110,12 @@ const Checkout = () => {
                     </div>
                     <div className={styles.orderSummary}>
                         <h2>Ваша корзина</h2>
+                        <p className={styles.price}>Итого: {calculatePrice()} руб.</p>
+                        <p className={styles.price}>В корзине: {cartItems.length}  кофе</p>
                         {cartItems.map((item, index) => (
                             <div key={index} className={styles.cartItem}>
                                 <div>
-                                    <p className={styles.cartItemName}>{item.name}</p>
+                                    <p className={styles.cartItemName}>{item.name} - {item.price} руб.</p>
                                 </div>
                             </div>
                         ))}

@@ -41,6 +41,13 @@
     justify-content: flex-start;
 }
 
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
 .title {
     font-size: 1.2rem;
     margin-bottom: 10px;
