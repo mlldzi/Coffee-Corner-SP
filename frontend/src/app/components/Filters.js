@@ -13,7 +13,7 @@ const Filters = ({handleSearch}) => {
     const handleChangeTerm = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        handleSearch(searchMode, value); 
+        handleSearch(searchMode, value);
     };
 
     return (

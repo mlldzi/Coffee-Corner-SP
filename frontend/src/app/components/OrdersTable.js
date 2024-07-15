@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from '../orders/orders.module.css';
 
-const OrdersTable = ({orders, editingOrder, formData, handleEditClick, handleInputChange, handleSaveClick}) => {
+const OrdersTable = ({
+                         orders,
+                         editingOrder,
+                         formData,
+                         handleEditClick,
+                         handleInputChange,
+                         handleSaveClick,
+                         handleDeleteClick
+                     }) => {
+
     return (
         <table className={styles.ordersTable}>
             <thead>
@@ -75,6 +84,8 @@ const OrdersTable = ({orders, editingOrder, formData, handleEditClick, handleInp
                             <td>{order.is_completed ? 'Да' : 'Нет'}</td>
                             <td>
                                 <button className={styles.button} onClick={() => handleEditClick(order)}>Редактировать
+                                </button>
+                                <button className={styles.button} onClick={() => handleDeleteClick(order.id)}>Удалить
                                 </button>
                             </td>
                         </>

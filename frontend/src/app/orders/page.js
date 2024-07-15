@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import styles from './orders.module.css';
-import {getOrders, editOrder, checkAndRefreshToken} from '../services/api';
+import {getOrders, editOrder, checkAndRefreshToken, deleteOrder} from '../services/api';
 import Link from 'next/link';
 import Filters from '../components/Filters';
 import OrdersTable from '../components/OrdersTable';
@@ -124,6 +124,20 @@ const OrdersPage = () => {
         }
     };
 
+    const handleDeleteClick = async (orderId) => {
+        try {
+            const response = await deleteOrder(orderId);
+            if (response.success) {
+                const updatedOrders = await getOrders('desc');
+                setOrders(updatedOrders.orders);
+            } else {
+                console.error('Ошибка удаления заказа:', response.msg);
+            }
+        } catch (error) {
+            console.error('Ошибка удаления заказа:', error);
+        }
+    };
+
     return (
         <div className={styles.videoBackground}>
             <div className={styles.videoWrapper}>
@@ -141,6 +155,7 @@ const OrdersPage = () => {
                             handleEditClick={handleEditClick}
                             handleInputChange={handleInputChange}
                             handleSaveClick={handleSaveClick}
+                            handleDeleteClick={handleDeleteClick}
                         />
                     ) : (
                         <p>Нет заказов.</p>
