@@ -58,6 +58,7 @@ class OrdersTestCase(BaseTestCase):
         response = self.client.put('/api/orders/update_order/latest', json=data)
         self.assertEqual(response.status_code, 200)
         self.assertIn('success', response.json)
+        self.delete_order()
 
     def test_delete_order(self):
         self.test_create_order(False)

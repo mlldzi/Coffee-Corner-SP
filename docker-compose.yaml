@@ -63,21 +63,21 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "ter"
     restart: always
 
-  reset_db:
-    container_name: reset_db
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    command: python run.py reset_db
-    environment:
-      <<: *common_environment
-      DEBUG: True
-    depends_on:
-      - db
-    restart: on-failure
-    secrets:
-      - postgres_user
-      - postgres_password
+#  reset_db:
+#    container_name: reset_db
+#    build:
+#      context: ./backend
+#      dockerfile: Dockerfile
+#    command: python run.py reset_db
+#    environment:
+#      <<: *common_environment
+#      DEBUG: True
+#    depends_on:
+#      - db
+#    restart: on-failure
+#    secrets:
+#      - postgres_user
+#      - postgres_password
 
   test_backend:
     container_name: test_backend
